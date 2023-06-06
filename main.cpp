@@ -2,6 +2,7 @@
 
 using namespace std;
 
+
 int main(){
     vector<vector<int>> matrix(9, vector<int>(9, -1));
     SudoKu test(matrix);

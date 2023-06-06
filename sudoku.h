@@ -1,3 +1,5 @@
+#ifndef SUDOKU_H
+#define SUDOKU_H
 #include<iostream>
 #include<vector>
 #include<time.h>
@@ -19,3 +21,5 @@ public:
     void create_random_sudoku(int blank, vector<vector<int>>& matrix);
     ~SudoKu(){};
 };
+
+#endif
