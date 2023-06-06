@@ -63,7 +63,7 @@ void SudoKu::set_blank(int nums, vector<vector<int>>& matrix)
     srand(time(NULL));
     while(nums)
     {
-        int row = rand() / 9;
+        int row = rand() % 9;
         int col = rand() % 9;
         if(matrix[row][col] != -1)
         {
@@ -82,6 +82,6 @@ void SudoKu::create_random_sudoku(int blank, vector<vector<int>>& matrix)
         int index = rand() % 9;
         matrix[choice[index][0]].swap(matrix[choice[index][1]]);
         swap_col(choice[index][0], choice[index][1], matrix);
-        set_blank(blank, matrix);
     }
+    set_blank(blank, matrix);
 }
