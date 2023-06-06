@@ -1,40 +1,40 @@
 #include<iostream>
-
+#include"sudoku.h"
 //调用自己添加的getopt，以在windows下使用getopt
 #include"getopt.h"
 #include"assert.h"
-// #include"common.h"
+#include"common.h"
 
 using namespace std;
 
-//数独终局 -c
-bool if_gen_sudoku_endgame=false;
-int num_sudoku_endgame=0;
+// //数独终局 -c
+// bool if_gen_sudoku_endgame=false;
+// int num_sudoku_endgame=0;
 
-//求解数独的路径 -s
-bool redundant_s=false;
-char sudoku_slove_path[256];
-
-
-
-//需要的游戏数量 -n
-bool redundant_n=false;
-int num_sudoku_game=0;
-
-//生成游戏的难度 -m
-enum GAME_LEVEL{NONE,EASY,MEDIUM,HARD};
-bool redundant_m=false;
-int game_level=GAME_LEVEL::NONE;
-
-//挖空的数量范围 -r
-bool redundant_r=false;
-int low_range =0;
-int high_range =0;
+// //求解数独的路径 -s
+// bool redundant_s=false;
+// char sudoku_slove_path[256];
 
 
-//生成的游戏的解唯一 -u
-bool redundant_u=false;
-bool if_unique=false;
+
+// //需要的游戏数量 -n
+// bool redundant_n=false;
+// int num_sudoku_game=0;
+
+// //生成游戏的难度 -m
+// enum GAME_LEVEL{NONE,EASY,MEDIUM,HARD};
+// bool redundant_m=false;
+// int game_level=GAME_LEVEL::NONE;
+
+// //挖空的数量范围 -r
+// bool redundant_r=false;
+// int low_range =0;
+// int high_range =0;
+
+
+// //生成的游戏的解唯一 -u
+// bool redundant_u=false;
+// bool if_unique=false;
 
 
 
@@ -142,6 +142,26 @@ int main(int argc ,char * argv[]){
             assert(0,"u与n未同时出现");
         }
      }
+
+
+    //调用生成终局
+    if(if_gen_sudoku_endgame){
+        vector<vector<int>> matrix(9, vector<int>(9, -1));
+        SudoKu test(matrix);
+
+        for(int n=0;n<num_sudoku_endgame;n++){
+            test.create_random_sudoku(0, matrix);
+            for(int i=0; i<9; i++){
+                for(int j=0; j<9; j++){
+                    cout<<matrix[i][j]<<" ";
+                }
+                cout<<endl;
+            }
+        cout<<"-----------------"<<endl;
+        }
+
+    }
+
   
 
 
