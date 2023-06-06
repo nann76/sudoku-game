@@ -16,7 +16,7 @@ bool redundant_n=false;
 int num_sudoku_game=0;
 
 //生成游戏的难度 -m
-enum GAME_LEVEL{NONE,EASY,MID,HARD};
+enum GAME_LEVEL{NONE,EASY,MEDIUM,HARD};
 bool redundant_m=false;
 int game_level=GAME_LEVEL::NONE;
 
