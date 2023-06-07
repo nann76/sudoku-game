@@ -3,7 +3,7 @@
 
 #include<iostream>
 
-//自定义断言
+// 自定义断言
 void assert(bool cond,const char* message) {
 
     if (!cond) {
@@ -11,7 +11,6 @@ void assert(bool cond,const char* message) {
         exit(EXIT_FAILURE);
     }
 }
-
 
 #endif
 
