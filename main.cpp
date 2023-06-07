@@ -112,17 +112,9 @@ int main(int argc, char* argv[]) {
 
         ifstream in;
         in.open(sudoku_slove_path, ios::in);
+        cout << sudoku_slove_path << endl;
         slove_game.read_file(in, matrix);
 
-        cout << "求解结果：" << endl;
-        bool activate = slove_game.init(matrix, 0);
-
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                cout << matrix[i][j] << " ";
-            }
-            cout << endl;
-        }
     }
 
     // 调用生成终局

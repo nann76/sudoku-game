@@ -346,18 +346,51 @@ void SudoKu::read_file(ifstream& file, vector<vector<int>>& matrix) {
 
     string line;
     int row = 0;
+   
+    ofstream wfile;
+    wfile.open("result.txt", ios::out);
+
     while (getline(file, line))
     {
+        
+
         if (line.empty()) {
             break;
         }
 
-        for (int j = 0; j < 9; j++) {
-            int num = (char)line[2 * (long long)j] - '0';
-            matrix[row][j] = num;
+        if (row==9) {
+            row = 0;
+        
+            cout << "求解结果：" << endl;
+            bool activate = init(matrix, 0);
+
+            write_file(wfile, matrix);
+
+            for (int i = 0; i < 9; i++) {
+                for (int j = 0; j < 9; j++) {
+                    cout << matrix[i][j] << " ";
+                    matrix[i][j] = 0;
+
+                }
+                cout << endl;
+            }
+            cout << "-----------------" << endl;
+
         }
-        row++;
+        else {
+            for (int j = 0; j < 9; j++) {
+                int num = (char)line[2 * (long long)j] - '0';
+                matrix[row][j] = num;
+            }
+            row++;
+
+        }
+
+
+        
     }
+    cout << "结果输出到result.txt" << endl;
+    wfile.close();
     file.close();
 }
 
