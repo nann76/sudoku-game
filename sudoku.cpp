@@ -161,8 +161,13 @@ void SudoKu::create_random_sudoku(int num_game,bool if_unique){
             cout<<endl;
     }
     cout<<"-----------------"<<endl;
+    if (_access(game_dir.c_str(), 0) == -1)	//如果文件夹不存在
+        _mkdir(game_dir.c_str());				//则创建
 
-
+    string file_name=game_dir+to_string(i)+".txt";
+    ofstream wfile;
+    wfile.open(file_name,ios::out );
+    write_file(wfile,temp);
 
 
     }
@@ -173,23 +178,71 @@ void SudoKu::create_random_sudoku(int num_game,bool if_unique){
 
 
 //创建终局 
-void SudoKu::create_sudoku_endgame(vector<vector<int>>& matrix){
+void SudoKu::create_sudoku_endgame(int num_game,vector<vector<int>>& matrix){
 
     int choice[9][2] = {{0,1},{0,2},{1,2},{3,4},{3,5},{4,5},{6,7},{6,8},{7,8}};
     srand(time(NULL));
-    //调整矩阵
-    for(int i=0; i<CHANGE_MAX_NUM; i++){
-        int index = rand() % 9;
-        matrix[choice[index][0]].swap(matrix[choice[index][1]]);
-        swap_col(choice[index][0], choice[index][1], matrix);
-    }
-    //无需挖空
-    //输出打印
-    for(int i=0; i<9; i++){
-        for(int j=0; j<9; j++){
-            cout<<matrix[i][j]<<" ";
+    for(int num=0;num<num_game;num++){
+        //调整矩阵
+        for(int i=0; i<CHANGE_MAX_NUM; i++){
+            int index = rand() % 9;
+            matrix[choice[index][0]].swap(matrix[choice[index][1]]);
+            swap_col(choice[index][0], choice[index][1], matrix);
         }
-            cout<<endl;
+        //无需挖空
+        //输出打印
+        for(int i=0; i<9; i++){
+            for(int j=0; j<9; j++){
+                cout<<matrix[i][j]<<" ";
+            }
+                cout<<endl;
+        }
+        cout<<"-----------------"<<endl;
+        if (_access(endgame_dir.c_str(), 0) == -1)	//如果文件夹不存在
+            _mkdir(endgame_dir.c_str());				//则创建
+
+        string file_name=endgame_dir+to_string(num)+".txt";
+        ofstream wfile;
+        wfile.open(file_name,ios::out );
+        write_file(wfile,matrix);
+        // write_file(endgame_dir+to_string(num)+".txt",matrix);
+
     }
-    cout<<"-----------------"<<endl;
+}
+
+
+void SudoKu::read_file(ifstream& file,vector<vector<int>> matrix){
+
+    string line;
+    while (getline(file,line))
+    {
+       if(line.empty()){
+        break;
+       }
+
+        for(int i=0;i<9;i++){
+            for(int j=0;j<9;j++){
+                int num =(char)line[2*j]-'0';
+                matrix[i][j]=num;
+            }
+        }
+
+    }
+    file.close();
+
+
+}
+
+
+void SudoKu::write_file(ofstream& file,vector<vector<int>> matrix){
+
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            file << matrix[i][j] << " ";
+        }
+        file << std::endl;
+    }
+
+    file.close();
+
 }
