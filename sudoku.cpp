@@ -24,7 +24,7 @@ bool SudoKu::is_valid(int row, int col, int num, vector<vector<int>>& matrix)
 
 bool SudoKu::init(vector<vector<int>>& matrix, int start)
 {
-    if (start == 81) return true;
+    if (start == 81)  return true; 
     else {
         int row = start / 9;
         int col = start % 9;
@@ -44,6 +44,9 @@ bool SudoKu::init(vector<vector<int>>& matrix, int start)
         return current_is_valid;
     }
 }
+
+
+
 
 
 void SudoKu::swap_col(int m, int n, vector<vector<int>>& matrix)
