@@ -146,19 +146,41 @@ int main(int argc ,char * argv[]){
 
     //调用生成终局
     if(if_gen_sudoku_endgame){
-        vector<vector<int>> matrix(9, vector<int>(9, -1));
-        SudoKu test(matrix);
+        vector<vector<int>> matrix(9, vector<int>(9, 0));
+        //初始化矩阵
+        SudoKu endgame(matrix);
 
         for(int n=0;n<num_sudoku_endgame;n++){
-            test.create_random_sudoku(0, matrix);
-            for(int i=0; i<9; i++){
-                for(int j=0; j<9; j++){
-                    cout<<matrix[i][j]<<" ";
-                }
-                cout<<endl;
-            }
-        cout<<"-----------------"<<endl;
+            // endgame.create_random_sudoku(0, matrix);
+            endgame.create_sudoku_endgame(matrix);
+
         }
+
+    }
+
+
+    //生成游戏-n
+    if(redundant_n){
+        SudoKu gen_game;
+        gen_game.create_random_sudoku(num_sudoku_game,5,redundant_u);
+
+
+        //默认挖空数为5
+        int num_blank =5;
+        if(redundant_m){
+
+        }
+
+        // for(int n=0;n<num_sudoku_game;n++){
+        //     test.create_random_sudoku(5, matrix);
+        //     for(int i=0; i<9; i++){
+        //         for(int j=0; j<9; j++){
+        //             cout<<matrix[i][j]<<" ";
+        //         }
+        //         cout<<endl;
+        //     }
+        // cout<<"-----------------"<<endl;
+        // }
 
     }
 
