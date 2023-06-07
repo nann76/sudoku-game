@@ -184,6 +184,8 @@ int main(int argc ,char * argv[]){
         vector<vector<int>> matrix(9, vector<int>(9, 0));
         //初始化矩阵
         SudoKu endgame(matrix);
+
+        
         endgame.create_sudoku_endgame(num_sudoku_endgame,matrix);
 
         // for(int n=0;n<num_sudoku_endgame;n++){

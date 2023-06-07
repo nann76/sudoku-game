@@ -198,6 +198,9 @@ void SudoKu::create_sudoku_endgame(int num_game,vector<vector<int>>& matrix){
                 cout<<endl;
         }
         cout<<"-----------------"<<endl;
+
+
+
         if (_access(endgame_dir.c_str(), 0) == -1)	//如果文件夹不存在
             _mkdir(endgame_dir.c_str());				//则创建
 
