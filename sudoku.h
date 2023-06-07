@@ -15,19 +15,6 @@ using namespace std;
 
 class SudoKu
 {
-private:
-    // //游戏难度
-    // int level_game=0;
-    // //挖空数量范围
-    // bool opt_r=false;
-    // int low_range =0;
-    // int high_range =0; 
-
-    // //唯一解
-    // bool opt_u=false;
-
-    // int num_blank =5;
-
 public:
 
     bool init(vector<vector<int>>& matrix, int start);
@@ -42,19 +29,15 @@ public:
     enum GAME_LEVEL { NONE, EASY, MEDIUM, HARD };
     SudoKu() {};
     SudoKu(vector<vector<int>>& matrix);
-    //创建指定数量和挖空数量的数独，以及是否唯一解
+    // 创建指定数量和挖空数量的数独，以及是否唯一解
     void create_random_sudoku(int num_game, bool if_unique);
-    //创建终局 
+    // 创建终局 
     void create_sudoku_endgame(int num_game, vector<vector<int>>& matrix);
-    //创建指定数量和挖空数量的数独，以及是否唯一解
-    void create_sudoku(vector<vector<int>> matrix);
 
-    //读文件
+    // 读文件
     void read_file(ifstream& file, vector<vector<int>>& matrix);
-    //写文件
+    // 写文件
     void write_file(ofstream& file, vector<vector<int>> matrix);
-
-
 
     ~SudoKu() {};
 };

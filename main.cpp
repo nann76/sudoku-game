@@ -1,6 +1,5 @@
 #include<iostream>
-// #include"sudoku.h"
-//调用自己添加的getopt，以在windows下使用getopt
+// 调用自己添加的getopt，以在windows下使用getopt
 #include"getopt.h"
 #include"assert.h"
 #include"common.h"
@@ -9,54 +8,45 @@ using namespace std;
 
 
 
-
-
 int main(int argc, char* argv[]) {
-
-    //参数，只有-u后无参数
+    // 参数，只有-u后无参数
     char getopt_arg[] = "c:s:n:m:r:u";
     int opt;
 
     while ((opt = getopt(argc, argv, getopt_arg)) != -1) {
-
-        switch (opt)
-        {
+        switch (opt){
         case 'c':
             assert(!if_gen_sudoku_endgame, "redundant optarg  -c");
             if_gen_sudoku_endgame = true;
 
-            //取终局的数量
+            // 取终局的数量
             num_sudoku_endgame = atoi(optarg);
             assert(num_sudoku_endgame != 0, "optarg  -c not a num ");
-            // cout<<num_sudoku_endgame<<endl;
             assert(1 <= num_sudoku_endgame && num_sudoku_endgame <= 1000000, "终局的数量不在范围内");
             break;
         case 's':
             assert(!redundant_s, "redundant optarg  -s");
             redundant_s = true;
-            //取求解路径
+            // 取求解路径
             strcpy(sudoku_slove_path, optarg);
-            // cout<<sudoku_slove_path<<endl;
             break;
         case 'n':
             assert(!redundant_n, "redundant optarg  -n");
             redundant_n = true;
 
-            //取需要的游戏数量
+            // 取需要的游戏数量
             num_sudoku_game = atoi(optarg);
             assert(num_sudoku_game != 0, "optarg  -n not a num ");
-            // cout<<num_sudoku_game<<endl;
             assert(1 <= num_sudoku_game && num_sudoku_game <= 1000, "需要的游戏数量不在范围内");
             break;
         case 'm':
             assert(!redundant_m, "redundant optarg  -m");
             redundant_m = true;
 
-            //取需要的游戏数量
+            // 取需要的游戏数量
             game_level = atoi(optarg);
             assert(game_level != 0, "optarg  -m not a num ");
             assert(1 <= game_level && game_level <= 3, "游戏难度不在范围内");
-            // cout<<game_level<<endl;
             break;
         case 'r':
             assert(!redundant_r, "redundant optarg  -r");
@@ -71,8 +61,6 @@ int main(int argc, char* argv[]) {
             low_range = atoi(low);
             up = strtok(NULL, "~");
             high_range = atoi(up);
-            // cout<<low_range<<endl<<high_range<<endl;
-
 
             assert(low_range != 0, "optarg  -u  low range not a num ");
             assert(high_range != 0, "optarg  -u  high range not a num ");
@@ -82,22 +70,20 @@ int main(int argc, char* argv[]) {
             if (high_range < low_range) {
                 assert(0, "挖空的范围low range 小于high_range ");
             }
-
-
             break;
         case 'u':
             assert(!redundant_u, "redundant optarg  -u");
             redundant_u = true;
             break;
         default:
-            //无效opt
+            // 无效opt
             cout << "exit invalid opt:" << endl;
             break;
         }
 
     }
 
-    //判断参数同时出现
+    // 判断参数同时出现
     if (redundant_m) {
         if (!redundant_n) {
             assert(0, "m与n未同时出现");
@@ -128,13 +114,6 @@ int main(int argc, char* argv[]) {
         in.open(sudoku_slove_path, ios::in);
         slove_game.read_file(in, matrix);
 
-        // for(int i=0; i<9; i++){
-        //         for(int j=0; j<9; j++){
-        //             cout<<matrix[i][j]<<" ";
-        //         }
-        //         cout<<endl;
-        //     }
-        // cout<<"-----------------"<<endl;
         cout << "求解结果：" << endl;
         bool activate = slove_game.init(matrix, 0);
 
@@ -144,45 +123,20 @@ int main(int argc, char* argv[]) {
             }
             cout << endl;
         }
-        // cout<<"-----------------"<<endl;
-
-
-
-
     }
 
-
-    //调用生成终局
+    // 调用生成终局
     if (if_gen_sudoku_endgame) {
         vector<vector<int>> matrix(9, vector<int>(9, 0));
-        //初始化矩阵
+        // 初始化矩阵
         SudoKu endgame(matrix);
 
-
         endgame.create_sudoku_endgame(num_sudoku_endgame, matrix);
-
-        // for(int n=0;n<num_sudoku_endgame;n++){
-        //     // endgame.create_random_sudoku(0, matrix);
-        //     endgame.create_sudoku_endgame(matrix);
-
-        // }
-
     }
 
-
-    //生成游戏-n
+    // 生成游戏-n
     if (redundant_n) {
-
-
         SudoKu gen_game;
         gen_game.create_random_sudoku(num_sudoku_game, redundant_u);
-
-
-
-
     }
-
-
-
-
 }

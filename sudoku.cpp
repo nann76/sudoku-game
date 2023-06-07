@@ -63,7 +63,7 @@ void SudoKu::swap_col(int m, int n, vector<vector<int>>& matrix)
 
 void SudoKu::set_blank(int nums, vector<vector<int>>& matrix)
 {
-    srand(time(NULL));
+    srand((unsigned int)time(NULL));
     while (nums)
     {
         int row = rand() % 9;
@@ -77,23 +77,10 @@ void SudoKu::set_blank(int nums, vector<vector<int>>& matrix)
 }
 
 
-// void SudoKu::create_random_sudoku(int blank, vector<vector<int>>& matrix)
-// {
-//     int choice[9][2] = {{0,1},{0,2},{1,2},{3,4},{3,5},{4,5},{6,7},{6,8},{7,8}};
-//     srand(time(NULL));
-//     //调整矩阵
-//     for(int i=0; i<CHANGE_MAX_NUM; i++){
-//         int index = rand() % 9;
-//         matrix[choice[index][0]].swap(matrix[choice[index][1]]);
-//         swap_col(choice[index][0], choice[index][1], matrix);
-//     }
-//     //挖空
-//     set_blank(blank, matrix);
-// }
 void SudoKu::create_random_sudoku(int num_game, bool if_unique) {
 
 
-    //挖空数
+    // 挖空数
     int num_blank = 10;
 
     extern bool redundant_m;
@@ -103,7 +90,7 @@ void SudoKu::create_random_sudoku(int num_game, bool if_unique) {
     extern int low_range;
     extern int high_range;
 
-    //根据游戏难度修改挖空数
+    // 根据游戏难度修改挖空数
     if (redundant_m) {
         switch (game_level)
         {
@@ -123,40 +110,34 @@ void SudoKu::create_random_sudoku(int num_game, bool if_unique) {
             num_blank = 10;
             break;
         }
-        // cout<<"给定难度为："<<game_level<<"挖空数为: "<<num_blank<<endl;
     }
 
-
-
-    //新建
+    // 新建
     vector<vector<int>> matrix(9, vector<int>(9, 0));
     this->active = this->init(matrix, 0);
 
     int choice[9][2] = { {0,1},{0,2},{1,2},{3,4},{3,5},{4,5},{6,7},{6,8},{7,8} };
-    srand(time(NULL));
+    srand((unsigned int)time(NULL));
 
     for (int i = 0; i < num_game; i++) {
-
         for (int i = 0; i < CHANGE_MAX_NUM; i++) {
             int index = rand() % 9;
             matrix[choice[index][0]].swap(matrix[choice[index][1]]);
             swap_col(choice[index][0], choice[index][1], matrix);
         }
 
-        //深拷贝初始
+        // 深拷贝初始
         vector<vector<int>> temp(matrix);
 
-        //根据给定范围设置挖空数
+        // 根据给定范围设置挖空数
         if (redundant_r) {
             num_blank = rand() % (high_range - low_range + 1) + low_range;
-            // cout<<"给定范围内挖空数为："<<num_blank<<endl;
         }
 
-
-        //挖空
+        // 挖空
         set_blank(num_blank, temp);
 
-        //输出打印
+        // 输出打印
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 cout << temp[i][j] << " ";
@@ -164,36 +145,34 @@ void SudoKu::create_random_sudoku(int num_game, bool if_unique) {
             cout << endl;
         }
         cout << "-----------------" << endl;
-        if (_access(game_dir.c_str(), 0) == -1)	//如果文件夹不存在
-            _mkdir(game_dir.c_str());				//则创建
+        if (_access(game_dir.c_str(), 0) == -1)	// 如果文件夹不存在
+        {
+            int ret = _mkdir(game_dir.c_str());// 则创建
+            if (ret == -1) cout << "mkdir failed!" << endl;
+        }
 
         string file_name = game_dir + to_string(i) + ".txt";
         ofstream wfile;
         wfile.open(file_name, ios::out);
         write_file(wfile, temp);
-
-
     }
-
 }
 
 
-
-
-//创建终局 
+// 创建终局 
 void SudoKu::create_sudoku_endgame(int num_game, vector<vector<int>>& matrix) {
 
     int choice[9][2] = { {0,1},{0,2},{1,2},{3,4},{3,5},{4,5},{6,7},{6,8},{7,8} };
-    srand(time(NULL));
+    srand((unsigned int)time(NULL));
     for (int num = 0; num < num_game; num++) {
-        //调整矩阵
+        // 调整矩阵
         for (int i = 0; i < CHANGE_MAX_NUM; i++) {
             int index = rand() % 9;
             matrix[choice[index][0]].swap(matrix[choice[index][1]]);
             swap_col(choice[index][0], choice[index][1], matrix);
         }
-        //无需挖空
-        //输出打印
+        // 无需挖空
+        // 输出打印
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 cout << matrix[i][j] << " ";
@@ -202,17 +181,16 @@ void SudoKu::create_sudoku_endgame(int num_game, vector<vector<int>>& matrix) {
         }
         cout << "-----------------" << endl;
 
-
-
-        if (_access(endgame_dir.c_str(), 0) == -1)	//如果文件夹不存在
-            _mkdir(endgame_dir.c_str());				//则创建
+        if (_access(endgame_dir.c_str(), 0) == -1)	// 如果文件夹不存在
+        {
+            int ret = _mkdir(endgame_dir.c_str());// 则创建
+            if (ret == -1) cout << "mkdir failed!" << endl;
+        }
 
         string file_name = endgame_dir + to_string(num) + ".txt";
         ofstream wfile;
         wfile.open(file_name, ios::out);
         write_file(wfile, matrix);
-        // write_file(endgame_dir+to_string(num)+".txt",matrix);
-
     }
 }
 
@@ -223,35 +201,26 @@ void SudoKu::read_file(ifstream& file, vector<vector<int>>& matrix) {
     int row = 0;
     while (getline(file, line))
     {
-        // cout<<line<<endl;
         if (line.empty()) {
             break;
         }
 
-
         for (int j = 0; j < 9; j++) {
-            int num = (char)line[2 * j] - '0';
+            int num = (char)line[2 * (long long)j] - '0';
             matrix[row][j] = num;
         }
         row++;
-
-
     }
     file.close();
-
-
 }
 
 
 void SudoKu::write_file(ofstream& file, vector<vector<int>> matrix) {
-
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 9; j++) {
             file << matrix[i][j] << " ";
         }
         file << std::endl;
     }
-
     file.close();
-
 }
