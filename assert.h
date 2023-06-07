@@ -3,11 +3,11 @@
 
 #include<iostream>
 
-//è‡ªå®šä¹‰æ–­è¨€
-void assert(bool cond,char * message){
+//×Ô¶¨Òå¶ÏÑÔ
+void assert(bool cond,const char* message) {
 
-    if(!cond){
-        std::cout<<message<<std::endl;
+    if (!cond) {
+        std::cout << message << std::endl;
         exit(EXIT_FAILURE);
     }
 }

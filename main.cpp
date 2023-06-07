@@ -1,159 +1,132 @@
 #include<iostream>
 // #include"sudoku.h"
-//è°ƒç”¨è‡ªå·±æ·»åŠ çš„getoptï¼Œä»¥åœ¨windowsä¸‹ä½¿ç”¨getopt
+//µ÷ÓÃ×Ô¼ºÌí¼ÓµÄgetopt£¬ÒÔÔÚwindowsÏÂÊ¹ÓÃgetopt
 #include"getopt.h"
 #include"assert.h"
 #include"common.h"
-
+#pragma warning(disable:4996)
 using namespace std;
 
-// //æ•°ç‹¬ç»ˆå±€ -c
-// bool if_gen_sudoku_endgame=false;
-// int num_sudoku_endgame=0;
-
-// //æ±‚è§£æ•°ç‹¬çš„è·¯å¾„ -s
-// bool redundant_s=false;
-// char sudoku_slove_path[256];
 
 
 
-// //éœ€è¦çš„æ¸¸æˆæ•°é‡ -n
-// bool redundant_n=false;
-// int num_sudoku_game=0;
 
-// //ç”Ÿæˆæ¸¸æˆçš„éš¾åº¦ -m
-// enum GAME_LEVEL{NONE,EASY,MEDIUM,HARD};
-// bool redundant_m=false;
-// int game_level=GAME_LEVEL::NONE;
+int main(int argc, char* argv[]) {
 
-// //æŒ–ç©ºçš„æ•°é‡èŒƒå›´ -r
-// bool redundant_r=false;
-// int low_range =0;
-// int high_range =0;
-
-
-// //ç”Ÿæˆçš„æ¸¸æˆçš„è§£å”¯ä¸€ -u
-// bool redundant_u=false;
-// bool if_unique=false;
-
-
-
-int main(int argc ,char * argv[]){
-    
-    //å‚æ•°ï¼Œåªæœ‰-uåæ— å‚æ•°
+    //²ÎÊı£¬Ö»ÓĞ-uºóÎŞ²ÎÊı
     char getopt_arg[] = "c:s:n:m:r:u";
     int opt;
 
-     while ((opt = getopt(argc, argv, getopt_arg)) != -1){
-        
+    while ((opt = getopt(argc, argv, getopt_arg)) != -1) {
+
         switch (opt)
         {
-            case 'c':
-                assert(!if_gen_sudoku_endgame,"redundant optarg  -c");
-                if_gen_sudoku_endgame =true;
-                
-                //å–ç»ˆå±€çš„æ•°é‡
-                num_sudoku_endgame =atoi(optarg);
-                assert(num_sudoku_endgame!=0,"optarg  -c not a num ");
-                // cout<<num_sudoku_endgame<<endl;
-                assert(1<=num_sudoku_endgame&& num_sudoku_endgame<=1000000,"ç»ˆå±€çš„æ•°é‡ä¸åœ¨èŒƒå›´å†…");
-                break;
-            case 's':
-                assert(!redundant_s,"redundant optarg  -s");
-                redundant_s =true;
-                //å–æ±‚è§£è·¯å¾„
-                strcpy(sudoku_slove_path,optarg);
-                // cout<<sudoku_slove_path<<endl;
-                break;
-            case 'n':
-                assert(!redundant_n,"redundant optarg  -n");
-                redundant_n =true;
-                
-                //å–éœ€è¦çš„æ¸¸æˆæ•°é‡
-                num_sudoku_game =atoi(optarg);
-                assert(num_sudoku_game!=0,"optarg  -n not a num ");
-                // cout<<num_sudoku_game<<endl;
-                assert(1<=num_sudoku_game&& num_sudoku_game<=1000,"éœ€è¦çš„æ¸¸æˆæ•°é‡ä¸åœ¨èŒƒå›´å†…");
-                break;
-            case 'm':
-                assert(!redundant_m,"redundant optarg  -m");
-                redundant_m =true;
-             
-                //å–éœ€è¦çš„æ¸¸æˆæ•°é‡
-                game_level =atoi(optarg);
-                assert(game_level!=0,"optarg  -m not a num ");
-                assert(1<=game_level&&game_level <=3,"æ¸¸æˆéš¾åº¦ä¸åœ¨èŒƒå›´å†…");
-                // cout<<game_level<<endl;
-                break;
-            case 'r':
-                assert(!redundant_r,"redundant optarg  -r");
-                redundant_r =true;
+        case 'c':
+            assert(!if_gen_sudoku_endgame, "redundant optarg  -c");
+            if_gen_sudoku_endgame = true;
 
-                char temp[20];
-                strcpy(temp, optarg);
-                char * low;
-                char * up;
+            //È¡ÖÕ¾ÖµÄÊıÁ¿
+            num_sudoku_endgame = atoi(optarg);
+            assert(num_sudoku_endgame != 0, "optarg  -c not a num ");
+            // cout<<num_sudoku_endgame<<endl;
+            assert(1 <= num_sudoku_endgame && num_sudoku_endgame <= 1000000, "ÖÕ¾ÖµÄÊıÁ¿²»ÔÚ·¶Î§ÄÚ");
+            break;
+        case 's':
+            assert(!redundant_s, "redundant optarg  -s");
+            redundant_s = true;
+            //È¡Çó½âÂ·¾¶
+            strcpy(sudoku_slove_path, optarg);
+            // cout<<sudoku_slove_path<<endl;
+            break;
+        case 'n':
+            assert(!redundant_n, "redundant optarg  -n");
+            redundant_n = true;
 
-                low = strtok(temp, "~");
-                low_range = atoi(low);
-                up = strtok(NULL, "~");
-                high_range=atoi(up);
-                // cout<<low_range<<endl<<high_range<<endl;
+            //È¡ĞèÒªµÄÓÎÏ·ÊıÁ¿
+            num_sudoku_game = atoi(optarg);
+            assert(num_sudoku_game != 0, "optarg  -n not a num ");
+            // cout<<num_sudoku_game<<endl;
+            assert(1 <= num_sudoku_game && num_sudoku_game <= 1000, "ĞèÒªµÄÓÎÏ·ÊıÁ¿²»ÔÚ·¶Î§ÄÚ");
+            break;
+        case 'm':
+            assert(!redundant_m, "redundant optarg  -m");
+            redundant_m = true;
+
+            //È¡ĞèÒªµÄÓÎÏ·ÊıÁ¿
+            game_level = atoi(optarg);
+            assert(game_level != 0, "optarg  -m not a num ");
+            assert(1 <= game_level && game_level <= 3, "ÓÎÏ·ÄÑ¶È²»ÔÚ·¶Î§ÄÚ");
+            // cout<<game_level<<endl;
+            break;
+        case 'r':
+            assert(!redundant_r, "redundant optarg  -r");
+            redundant_r = true;
+
+            char temp[20];
+            strcpy(temp, optarg);
+            char* low;
+            char* up;
+
+            low = strtok(temp, "~");
+            low_range = atoi(low);
+            up = strtok(NULL, "~");
+            high_range = atoi(up);
+            // cout<<low_range<<endl<<high_range<<endl;
 
 
-                assert(low_range!=0,"optarg  -u  low range not a num ");
-                assert(high_range!=0,"optarg  -u  high range not a num ");
+            assert(low_range != 0, "optarg  -u  low range not a num ");
+            assert(high_range != 0, "optarg  -u  high range not a num ");
 
-                assert(20<=low_range&&low_range<=55,"æŒ–ç©ºçš„èŒƒå›´low_range ä¸åœ¨è¿‡è§„å®šèŒƒå›´å†…");
-                assert(20<=high_range&&high_range<=55,"æŒ–ç©ºçš„èŒƒå›´high_range ä¸åœ¨è¿‡è§„å®šèŒƒå›´å†…");
-                if(high_range<low_range){
-                    assert(0,"æŒ–ç©ºçš„èŒƒå›´low range å°äºhigh_range ");
-                }
+            assert(20 <= low_range && low_range <= 55, "ÍÚ¿ÕµÄ·¶Î§low_range ²»ÔÚ¹ı¹æ¶¨·¶Î§ÄÚ");
+            assert(20 <= high_range && high_range <= 55, "ÍÚ¿ÕµÄ·¶Î§high_range ²»ÔÚ¹ı¹æ¶¨·¶Î§ÄÚ");
+            if (high_range < low_range) {
+                assert(0, "ÍÚ¿ÕµÄ·¶Î§low range Ğ¡ÓÚhigh_range ");
+            }
 
-                
-                break;
-            case 'u':
-                assert(!redundant_u,"redundant optarg  -u");
-                redundant_u =true;
-                break;
-            default:
-                //æ— æ•ˆopt
-                cout<<"exit invalid opt:"<<endl;
-                break;
+
+            break;
+        case 'u':
+            assert(!redundant_u, "redundant optarg  -u");
+            redundant_u = true;
+            break;
+        default:
+            //ÎŞĞ§opt
+            cout << "exit invalid opt:" << endl;
+            break;
         }
 
-     }
+    }
 
-     //åˆ¤æ–­å‚æ•°åŒæ—¶å‡ºç°
-     if(redundant_m){
-        if(!redundant_n){
-            assert(0,"mä¸næœªåŒæ—¶å‡ºç°");
+    //ÅĞ¶Ï²ÎÊıÍ¬Ê±³öÏÖ
+    if (redundant_m) {
+        if (!redundant_n) {
+            assert(0, "mÓënÎ´Í¬Ê±³öÏÖ");
         }
-     }
+    }
 
-    if(redundant_r){
-        if(!redundant_n){
-            assert(0,"rä¸næœªåŒæ—¶å‡ºç°");
+    if (redundant_r) {
+        if (!redundant_n) {
+            assert(0, "rÓënÎ´Í¬Ê±³öÏÖ");
         }
-     }
+    }
 
-    if(redundant_u){
-        if(!redundant_n){
-            assert(0,"uä¸næœªåŒæ—¶å‡ºç°");
+    if (redundant_u) {
+        if (!redundant_n) {
+            assert(0, "uÓënÎ´Í¬Ê±³öÏÖ");
         }
-     }
+    }
 
-     if(redundant_m && redundant_r){
-        assert(0,"må’Œrä¸èƒ½åŒæ—¶å‡ºç°");
-     }
+    if (redundant_m && redundant_r) {
+        assert(0, "mºÍr²»ÄÜÍ¬Ê±³öÏÖ");
+    }
 
-    if(redundant_s){
+    if (redundant_s) {
         vector<vector<int>> matrix(9, vector<int>(9, 0));
         SudoKu slove_game;
 
         ifstream in;
-        in.open(sudoku_slove_path,ios::in);
-        slove_game.read_file(in,matrix);
+        in.open(sudoku_slove_path, ios::in);
+        slove_game.read_file(in, matrix);
 
         // for(int i=0; i<9; i++){
         //         for(int j=0; j<9; j++){
@@ -162,15 +135,15 @@ int main(int argc ,char * argv[]){
         //         cout<<endl;
         //     }
         // cout<<"-----------------"<<endl;
-        cout<<"æ±‚è§£ç»“æœï¼š"<<endl;
-        bool activate=slove_game.init(matrix,0);
+        cout << "Çó½â½á¹û£º" << endl;
+        bool activate = slove_game.init(matrix, 0);
 
-                for(int i=0; i<9; i++){
-                for(int j=0; j<9; j++){
-                    cout<<matrix[i][j]<<" ";
-                }
-                cout<<endl;
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                cout << matrix[i][j] << " ";
             }
+            cout << endl;
+        }
         // cout<<"-----------------"<<endl;
 
 
@@ -179,14 +152,14 @@ int main(int argc ,char * argv[]){
     }
 
 
-    //è°ƒç”¨ç”Ÿæˆç»ˆå±€
-    if(if_gen_sudoku_endgame){
+    //µ÷ÓÃÉú³ÉÖÕ¾Ö
+    if (if_gen_sudoku_endgame) {
         vector<vector<int>> matrix(9, vector<int>(9, 0));
-        //åˆå§‹åŒ–çŸ©é˜µ
+        //³õÊ¼»¯¾ØÕó
         SudoKu endgame(matrix);
 
-        
-        endgame.create_sudoku_endgame(num_sudoku_endgame,matrix);
+
+        endgame.create_sudoku_endgame(num_sudoku_endgame, matrix);
 
         // for(int n=0;n<num_sudoku_endgame;n++){
         //     // endgame.create_random_sudoku(0, matrix);
@@ -197,28 +170,19 @@ int main(int argc ,char * argv[]){
     }
 
 
-    //ç”Ÿæˆæ¸¸æˆ-n
-    if(redundant_n){
+    //Éú³ÉÓÎÏ·-n
+    if (redundant_n) {
 
 
         SudoKu gen_game;
-        gen_game.create_random_sudoku(num_sudoku_game,redundant_u);
+        gen_game.create_random_sudoku(num_sudoku_game, redundant_u);
 
 
-        // for(int n=0;n<num_sudoku_game;n++){
-        //     test.create_random_sudoku(5, matrix);
-        //     for(int i=0; i<9; i++){
-        //         for(int j=0; j<9; j++){
-        //             cout<<matrix[i][j]<<" ";
-        //         }
-        //         cout<<endl;
-        //     }
-        // cout<<"-----------------"<<endl;
-        // }
+
 
     }
 
-  
+
 
 
 }

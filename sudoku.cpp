@@ -5,17 +5,17 @@ using namespace std;
 
 SudoKu::SudoKu(vector<vector<int>>& matrix)
 {
-    this->active=init(matrix, 0);
+    this->active = init(matrix, 0);
 }
 
 
 bool SudoKu::is_valid(int row, int col, int num, vector<vector<int>>& matrix)
 {
-    for(int i=0; i<matrix[0].size(); i++) if(num == matrix[row][i]) return false;
-    for(int i=0; i<matrix.size(); i++)    if(num == matrix[i][col]) return false;
-    for(int i=row/3*3; i<row/3*3+3; i++){
-        for(int j=col/3*3; j<col/3*3+3; j++){
-            if(num == matrix[i][j]) return false;
+    for (int i = 0; i < matrix[0].size(); i++) if (num == matrix[row][i]) return false;
+    for (int i = 0; i < matrix.size(); i++)    if (num == matrix[i][col]) return false;
+    for (int i = row / 3 * 3; i < row / 3 * 3 + 3; i++) {
+        for (int j = col / 3 * 3; j < col / 3 * 3 + 3; j++) {
+            if (num == matrix[i][j]) return false;
         }
     }
     return true;
@@ -24,21 +24,21 @@ bool SudoKu::is_valid(int row, int col, int num, vector<vector<int>>& matrix)
 
 bool SudoKu::init(vector<vector<int>>& matrix, int start)
 {
-    if(start == 81) return true;
-    else{
+    if (start == 81) return true;
+    else {
         int row = start / 9;
         int col = start % 9;
         bool current_is_valid = false;
-        if(matrix[row][col] == 0){
-            for(int i=1; i<10; i++){
-                if(this->is_valid(row, col, i, matrix)){
+        if (matrix[row][col] == 0) {
+            for (int i = 1; i < 10; i++) {
+                if (this->is_valid(row, col, i, matrix)) {
                     matrix[row][col] = i;
-                    current_is_valid = init(matrix, start+1);
-                    if(!current_is_valid) matrix[row][col] = 0;
+                    current_is_valid = init(matrix, start + 1);
+                    if (!current_is_valid) matrix[row][col] = 0;
                 }
             }
         }
-        else{
+        else {
             current_is_valid = init(matrix, start + 1);
         }
         return current_is_valid;
@@ -49,7 +49,7 @@ bool SudoKu::init(vector<vector<int>>& matrix, int start)
 void SudoKu::swap_col(int m, int n, vector<vector<int>>& matrix)
 {
     vector<int> temp(matrix.size(), 0);
-    for(int i=0; i<matrix.size(); i++)
+    for (int i = 0; i < matrix.size(); i++)
     {
         temp[i] = matrix[i][m];
         matrix[i][m] = matrix[i][n];
@@ -61,11 +61,11 @@ void SudoKu::swap_col(int m, int n, vector<vector<int>>& matrix)
 void SudoKu::set_blank(int nums, vector<vector<int>>& matrix)
 {
     srand(time(NULL));
-    while(nums)
+    while (nums)
     {
         int row = rand() % 9;
         int col = rand() % 9;
-        if(matrix[row][col] != 0)
+        if (matrix[row][col] != 0)
         {
             matrix[row][col] = 0;
             nums--;
@@ -78,96 +78,96 @@ void SudoKu::set_blank(int nums, vector<vector<int>>& matrix)
 // {
 //     int choice[9][2] = {{0,1},{0,2},{1,2},{3,4},{3,5},{4,5},{6,7},{6,8},{7,8}};
 //     srand(time(NULL));
-//     //è°ƒæ•´çŸ©é˜µ
+//     //µ÷Õû¾ØÕó
 //     for(int i=0; i<CHANGE_MAX_NUM; i++){
 //         int index = rand() % 9;
 //         matrix[choice[index][0]].swap(matrix[choice[index][1]]);
 //         swap_col(choice[index][0], choice[index][1], matrix);
 //     }
-//     //æŒ–ç©º
+//     //ÍÚ¿Õ
 //     set_blank(blank, matrix);
 // }
-void SudoKu::create_random_sudoku(int num_game,bool if_unique){
+void SudoKu::create_random_sudoku(int num_game, bool if_unique) {
 
 
-            //æŒ–ç©ºæ•°
-        int num_blank=10;
+    //ÍÚ¿ÕÊı
+    int num_blank = 10;
 
-        extern bool redundant_m;
-        extern int game_level;
+    extern bool redundant_m;
+    extern int game_level;
 
-        extern bool redundant_r;
-        extern int low_range ;
-        extern int high_range ;
+    extern bool redundant_r;
+    extern int low_range;
+    extern int high_range;
 
-        //æ ¹æ®æ¸¸æˆéš¾åº¦ä¿®æ”¹æŒ–ç©ºæ•°
-        if(redundant_m){
-            switch (game_level)
-            {
-            case GAME_LEVEL::NONE:
-                num_blank=10;
-                break;
-            case GAME_LEVEL::EASY:
-                num_blank=10;
-                break;
-            case GAME_LEVEL::MEDIUM:
-                num_blank=30;
-                break;
-            case GAME_LEVEL::HARD:
-                num_blank=60;
-                break;     
-            default:
-                num_blank=10;
-                break;
-            }
-        // cout<<"ç»™å®šéš¾åº¦ä¸ºï¼š"<<game_level<<"æŒ–ç©ºæ•°ä¸º: "<<num_blank<<endl;
+    //¸ù¾İÓÎÏ·ÄÑ¶ÈĞŞ¸ÄÍÚ¿ÕÊı
+    if (redundant_m) {
+        switch (game_level)
+        {
+        case GAME_LEVEL::NONE:
+            num_blank = 10;
+            break;
+        case GAME_LEVEL::EASY:
+            num_blank = 10;
+            break;
+        case GAME_LEVEL::MEDIUM:
+            num_blank = 30;
+            break;
+        case GAME_LEVEL::HARD:
+            num_blank = 60;
+            break;
+        default:
+            num_blank = 10;
+            break;
         }
+        // cout<<"¸ø¶¨ÄÑ¶ÈÎª£º"<<game_level<<"ÍÚ¿ÕÊıÎª: "<<num_blank<<endl;
+    }
 
 
 
-    //æ–°å»º
+    //ĞÂ½¨
     vector<vector<int>> matrix(9, vector<int>(9, 0));
-    this->active=this->init(matrix,0);
+    this->active = this->init(matrix, 0);
 
-    int choice[9][2] = {{0,1},{0,2},{1,2},{3,4},{3,5},{4,5},{6,7},{6,8},{7,8}};
+    int choice[9][2] = { {0,1},{0,2},{1,2},{3,4},{3,5},{4,5},{6,7},{6,8},{7,8} };
     srand(time(NULL));
 
-    for(int i=0;i<num_game;i++){
+    for (int i = 0; i < num_game; i++) {
 
-    for(int i=0; i<CHANGE_MAX_NUM; i++){
-        int index = rand() % 9;
-        matrix[choice[index][0]].swap(matrix[choice[index][1]]);
-        swap_col(choice[index][0], choice[index][1], matrix);
-    }
-
-    //æ·±æ‹·è´åˆå§‹
-    vector<vector<int>> temp(matrix);
-
-    //æ ¹æ®ç»™å®šèŒƒå›´è®¾ç½®æŒ–ç©ºæ•°
-    if(redundant_r){
-    num_blank= rand() % (high_range - low_range + 1) + low_range;
-    // cout<<"ç»™å®šèŒƒå›´å†…æŒ–ç©ºæ•°ä¸ºï¼š"<<num_blank<<endl;
-    }
-    
-
-    //æŒ–ç©º
-    set_blank(num_blank, temp);
-
-        //è¾“å‡ºæ‰“å°
-    for(int i=0; i<9; i++){
-        for(int j=0; j<9; j++){
-            cout<<temp[i][j]<<" ";
+        for (int i = 0; i < CHANGE_MAX_NUM; i++) {
+            int index = rand() % 9;
+            matrix[choice[index][0]].swap(matrix[choice[index][1]]);
+            swap_col(choice[index][0], choice[index][1], matrix);
         }
-            cout<<endl;
-    }
-    cout<<"-----------------"<<endl;
-    if (_access(game_dir.c_str(), 0) == -1)	//å¦‚æœæ–‡ä»¶å¤¹ä¸å­˜åœ¨
-        _mkdir(game_dir.c_str());				//åˆ™åˆ›å»º
 
-    string file_name=game_dir+to_string(i)+".txt";
-    ofstream wfile;
-    wfile.open(file_name,ios::out );
-    write_file(wfile,temp);
+        //Éî¿½±´³õÊ¼
+        vector<vector<int>> temp(matrix);
+
+        //¸ù¾İ¸ø¶¨·¶Î§ÉèÖÃÍÚ¿ÕÊı
+        if (redundant_r) {
+            num_blank = rand() % (high_range - low_range + 1) + low_range;
+            // cout<<"¸ø¶¨·¶Î§ÄÚÍÚ¿ÕÊıÎª£º"<<num_blank<<endl;
+        }
+
+
+        //ÍÚ¿Õ
+        set_blank(num_blank, temp);
+
+        //Êä³ö´òÓ¡
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                cout << temp[i][j] << " ";
+            }
+            cout << endl;
+        }
+        cout << "-----------------" << endl;
+        if (_access(game_dir.c_str(), 0) == -1)	//Èç¹ûÎÄ¼ş¼Ğ²»´æÔÚ
+            _mkdir(game_dir.c_str());				//Ôò´´½¨
+
+        string file_name = game_dir + to_string(i) + ".txt";
+        ofstream wfile;
+        wfile.open(file_name, ios::out);
+        write_file(wfile, temp);
 
 
     }
@@ -177,61 +177,61 @@ void SudoKu::create_random_sudoku(int num_game,bool if_unique){
 
 
 
-//åˆ›å»ºç»ˆå±€ 
-void SudoKu::create_sudoku_endgame(int num_game,vector<vector<int>>& matrix){
+//´´½¨ÖÕ¾Ö 
+void SudoKu::create_sudoku_endgame(int num_game, vector<vector<int>>& matrix) {
 
-    int choice[9][2] = {{0,1},{0,2},{1,2},{3,4},{3,5},{4,5},{6,7},{6,8},{7,8}};
+    int choice[9][2] = { {0,1},{0,2},{1,2},{3,4},{3,5},{4,5},{6,7},{6,8},{7,8} };
     srand(time(NULL));
-    for(int num=0;num<num_game;num++){
-        //è°ƒæ•´çŸ©é˜µ
-        for(int i=0; i<CHANGE_MAX_NUM; i++){
+    for (int num = 0; num < num_game; num++) {
+        //µ÷Õû¾ØÕó
+        for (int i = 0; i < CHANGE_MAX_NUM; i++) {
             int index = rand() % 9;
             matrix[choice[index][0]].swap(matrix[choice[index][1]]);
             swap_col(choice[index][0], choice[index][1], matrix);
         }
-        //æ— éœ€æŒ–ç©º
-        //è¾“å‡ºæ‰“å°
-        for(int i=0; i<9; i++){
-            for(int j=0; j<9; j++){
-                cout<<matrix[i][j]<<" ";
+        //ÎŞĞèÍÚ¿Õ
+        //Êä³ö´òÓ¡
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                cout << matrix[i][j] << " ";
             }
-                cout<<endl;
+            cout << endl;
         }
-        cout<<"-----------------"<<endl;
+        cout << "-----------------" << endl;
 
 
 
-        if (_access(endgame_dir.c_str(), 0) == -1)	//å¦‚æœæ–‡ä»¶å¤¹ä¸å­˜åœ¨
-            _mkdir(endgame_dir.c_str());				//åˆ™åˆ›å»º
+        if (_access(endgame_dir.c_str(), 0) == -1)	//Èç¹ûÎÄ¼ş¼Ğ²»´æÔÚ
+            _mkdir(endgame_dir.c_str());				//Ôò´´½¨
 
-        string file_name=endgame_dir+to_string(num)+".txt";
+        string file_name = endgame_dir + to_string(num) + ".txt";
         ofstream wfile;
-        wfile.open(file_name,ios::out );
-        write_file(wfile,matrix);
+        wfile.open(file_name, ios::out);
+        write_file(wfile, matrix);
         // write_file(endgame_dir+to_string(num)+".txt",matrix);
 
     }
 }
 
 
-void SudoKu::read_file(ifstream& file,vector<vector<int>> &matrix){
+void SudoKu::read_file(ifstream& file, vector<vector<int>>& matrix) {
 
     string line;
-    int row=0;
-    while (getline(file,line))
+    int row = 0;
+    while (getline(file, line))
     {
         // cout<<line<<endl;
-       if(line.empty()){
-        break;
-       }
+        if (line.empty()) {
+            break;
+        }
 
 
-        for(int j=0;j<9;j++){
-            int num =(char)line[2*j]-'0';
-            matrix[row][j]=num;
+        for (int j = 0; j < 9; j++) {
+            int num = (char)line[2 * j] - '0';
+            matrix[row][j] = num;
         }
         row++;
-        
+
 
     }
     file.close();
@@ -240,7 +240,7 @@ void SudoKu::read_file(ifstream& file,vector<vector<int>> &matrix){
 }
 
 
-void SudoKu::write_file(ofstream& file,vector<vector<int>> matrix){
+void SudoKu::write_file(ofstream& file, vector<vector<int>> matrix) {
 
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 9; j++) {

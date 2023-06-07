@@ -2,34 +2,34 @@
 #define COMMON_H
 #include"sudoku.h"
 
-//æ•°ç‹¬ç»ˆå±€ -c
-bool if_gen_sudoku_endgame=false;
-int num_sudoku_endgame=0;
+//Êı¶ÀÖÕ¾Ö -c
+bool if_gen_sudoku_endgame = false;
+int num_sudoku_endgame = 0;
 
-//æ±‚è§£æ•°ç‹¬çš„è·¯å¾„ -s
-bool redundant_s=false;
+//Çó½âÊı¶ÀµÄÂ·¾¶ -s
+bool redundant_s = false;
 char sudoku_slove_path[256];
 
 
 
-//éœ€è¦çš„æ¸¸æˆæ•°é‡ -n
-bool redundant_n=false;
-int num_sudoku_game=0;
+//ĞèÒªµÄÓÎÏ·ÊıÁ¿ -n
+bool redundant_n = false;
+int num_sudoku_game = 0;
 
-//ç”Ÿæˆæ¸¸æˆçš„éš¾åº¦ -m
+//Éú³ÉÓÎÏ·µÄÄÑ¶È -m
 // enum GAME_LEVEL{NONE,EASY,MEDIUM,HARD};
-bool redundant_m=false;
-int game_level=SudoKu::GAME_LEVEL::NONE;
+bool redundant_m = false;
+int game_level = SudoKu::GAME_LEVEL::NONE;
 
-//æŒ–ç©ºçš„æ•°é‡èŒƒå›´ -r
-bool redundant_r=false;
-int low_range =0;
-int high_range =0;
+//ÍÚ¿ÕµÄÊıÁ¿·¶Î§ -r
+bool redundant_r = false;
+int low_range = 0;
+int high_range = 0;
 
 
-//ç”Ÿæˆçš„æ¸¸æˆçš„è§£å”¯ä¸€ -u
-bool redundant_u=false;
-bool if_unique=false;
+//Éú³ÉµÄÓÎÏ·µÄ½âÎ¨Ò» -u
+bool redundant_u = false;
+bool if_unique = false;
 
 
 

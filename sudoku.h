@@ -8,7 +8,7 @@
 #include <io.h>
 #include <direct.h>
 
- 
+
 using namespace std;
 
 #define CHANGE_MAX_NUM 5
@@ -16,14 +16,14 @@ using namespace std;
 class SudoKu
 {
 private:
-    // //æ¸¸æˆéš¾åº¦
+    // //ÓÎÏ·ÄÑ¶È
     // int level_game=0;
-    // //æŒ–ç©ºæ•°é‡èŒƒå›´
+    // //ÍÚ¿ÕÊıÁ¿·¶Î§
     // bool opt_r=false;
     // int low_range =0;
     // int high_range =0; 
 
-    // //å”¯ä¸€è§£
+    // //Î¨Ò»½â
     // bool opt_u=false;
 
     // int num_blank =5;
@@ -37,26 +37,26 @@ public:
 
     bool active = false;
 
-    string endgame_dir="./endgames/";
-    string game_dir="./games/";
-    enum GAME_LEVEL{NONE,EASY,MEDIUM,HARD};
-    SudoKu(){};
+    string endgame_dir = "./endgames/";
+    string game_dir = "./games/";
+    enum GAME_LEVEL { NONE, EASY, MEDIUM, HARD };
+    SudoKu() {};
     SudoKu(vector<vector<int>>& matrix);
-    //åˆ›å»ºæŒ‡å®šæ•°é‡å’ŒæŒ–ç©ºæ•°é‡çš„æ•°ç‹¬ï¼Œä»¥åŠæ˜¯å¦å”¯ä¸€è§£
-    void create_random_sudoku(int num_game,bool if_unique);
-    //åˆ›å»ºç»ˆå±€ 
-    void create_sudoku_endgame(int num_game,vector<vector<int>>& matrix);
-    //åˆ›å»ºæŒ‡å®šæ•°é‡å’ŒæŒ–ç©ºæ•°é‡çš„æ•°ç‹¬ï¼Œä»¥åŠæ˜¯å¦å”¯ä¸€è§£
+    //´´½¨Ö¸¶¨ÊıÁ¿ºÍÍÚ¿ÕÊıÁ¿µÄÊı¶À£¬ÒÔ¼°ÊÇ·ñÎ¨Ò»½â
+    void create_random_sudoku(int num_game, bool if_unique);
+    //´´½¨ÖÕ¾Ö 
+    void create_sudoku_endgame(int num_game, vector<vector<int>>& matrix);
+    //´´½¨Ö¸¶¨ÊıÁ¿ºÍÍÚ¿ÕÊıÁ¿µÄÊı¶À£¬ÒÔ¼°ÊÇ·ñÎ¨Ò»½â
     void create_sudoku(vector<vector<int>> matrix);
 
-    //è¯»æ–‡ä»¶
-    void read_file(ifstream& file,vector<vector<int>>&matrix);
-    //å†™æ–‡ä»¶
-    void write_file(ofstream& file,vector<vector<int>> matrix);
+    //¶ÁÎÄ¼ş
+    void read_file(ifstream& file, vector<vector<int>>& matrix);
+    //Ğ´ÎÄ¼ş
+    void write_file(ofstream& file, vector<vector<int>> matrix);
 
 
 
-    ~SudoKu(){};
+    ~SudoKu() {};
 };
 
 #endif
