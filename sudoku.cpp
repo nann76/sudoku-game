@@ -87,7 +87,43 @@ void SudoKu::set_blank(int nums, vector<vector<int>>& matrix)
 //     //挖空
 //     set_blank(blank, matrix);
 // }
-void SudoKu::create_random_sudoku(int num_game,int num_blank,bool if_unique){
+void SudoKu::create_random_sudoku(int num_game,bool if_unique){
+
+
+            //挖空数
+        int num_blank=10;
+
+        extern bool redundant_m;
+        extern int game_level;
+
+        extern bool redundant_r;
+        extern int low_range ;
+        extern int high_range ;
+
+        //根据游戏难度修改挖空数
+        if(redundant_m){
+            switch (game_level)
+            {
+            case GAME_LEVEL::NONE:
+                num_blank=10;
+                break;
+            case GAME_LEVEL::EASY:
+                num_blank=10;
+                break;
+            case GAME_LEVEL::MEDIUM:
+                num_blank=30;
+                break;
+            case GAME_LEVEL::HARD:
+                num_blank=60;
+                break;     
+            default:
+                num_blank=10;
+                break;
+            }
+        // cout<<"给定难度为："<<game_level<<"挖空数为: "<<num_blank<<endl;
+        }
+
+
 
     //新建
     vector<vector<int>> matrix(9, vector<int>(9, 0));
@@ -107,6 +143,12 @@ void SudoKu::create_random_sudoku(int num_game,int num_blank,bool if_unique){
     //深拷贝初始
     vector<vector<int>> temp(matrix);
 
+    //根据给定范围设置挖空数
+    if(redundant_r){
+    num_blank= rand() % (high_range - low_range + 1) + low_range;
+    // cout<<"给定范围内挖空数为："<<num_blank<<endl;
+    }
+    
 
     //挖空
     set_blank(num_blank, temp);

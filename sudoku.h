@@ -29,10 +29,11 @@ private:
     void set_blank(int nums, vector<vector<int>>& matrix);
 public:
     bool active = false;
+    enum GAME_LEVEL{NONE,EASY,MEDIUM,HARD};
     SudoKu(){};
     SudoKu(vector<vector<int>>& matrix);
     //创建指定数量和挖空数量的数独，以及是否唯一解
-    void create_random_sudoku(int num_game,int num_blank,bool if_unique);
+    void create_random_sudoku(int num_game,bool if_unique);
     //创建终局 
     void create_sudoku_endgame(vector<vector<int>>& matrix);
     //创建指定数量和挖空数量的数独，以及是否唯一解

@@ -1,5 +1,5 @@
 #include<iostream>
-#include"sudoku.h"
+// #include"sudoku.h"
 //调用自己添加的getopt，以在windows下使用getopt
 #include"getopt.h"
 #include"assert.h"
@@ -143,6 +143,10 @@ int main(int argc ,char * argv[]){
         }
      }
 
+     if(redundant_m && redundant_r){
+        assert(0,"m和r不能同时出现");
+     }
+
 
     //调用生成终局
     if(if_gen_sudoku_endgame){
@@ -161,15 +165,11 @@ int main(int argc ,char * argv[]){
 
     //生成游戏-n
     if(redundant_n){
+
+
         SudoKu gen_game;
-        gen_game.create_random_sudoku(num_sudoku_game,5,redundant_u);
+        gen_game.create_random_sudoku(num_sudoku_game,redundant_u);
 
-
-        //默认挖空数为5
-        int num_blank =5;
-        if(redundant_m){
-
-        }
 
         // for(int n=0;n<num_sudoku_game;n++){
         //     test.create_random_sudoku(5, matrix);

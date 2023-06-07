@@ -1,5 +1,6 @@
 #ifndef COMMOM_H
 #define COMMON_H
+#include"sudoku.h"
 
 //数独终局 -c
 bool if_gen_sudoku_endgame=false;
@@ -16,9 +17,9 @@ bool redundant_n=false;
 int num_sudoku_game=0;
 
 //生成游戏的难度 -m
-enum GAME_LEVEL{NONE,EASY,MEDIUM,HARD};
+// enum GAME_LEVEL{NONE,EASY,MEDIUM,HARD};
 bool redundant_m=false;
-int game_level=GAME_LEVEL::NONE;
+int game_level=SudoKu::GAME_LEVEL::NONE;
 
 //挖空的数量范围 -r
 bool redundant_r=false;
