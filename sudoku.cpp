@@ -185,6 +185,17 @@ void SudoKu::create_random_sudoku(int num_game,bool if_unique) {
 
     int choice[9][2] = { {0,1},{0,2},{1,2},{3,4},{3,5},{4,5},{6,7},{6,8},{7,8} };
     srand((unsigned int)time(NULL));
+    /*
+    if (_access(game_dir.c_str(), 0) == -1)	// 如果文件夹不存在
+    {
+        int ret = _mkdir(game_dir.c_str());// 则创建
+        if (ret == -1) cout << "mkdir failed!" << endl;
+    }
+    */
+
+    string file_name = game_dir ;
+    ofstream wfile;
+    wfile.open(file_name, ios::out);
 
     for (int i = 0; i < num_game; i++) {
 
@@ -203,7 +214,7 @@ void SudoKu::create_random_sudoku(int num_game,bool if_unique) {
 
 
         if (if_unique) {
-            num_blank = 40;
+            //num_blank = 40;
 
             // 深拷贝初始
             vector<vector<int>> temp(matrix);
@@ -211,8 +222,11 @@ void SudoKu::create_random_sudoku(int num_game,bool if_unique) {
             set_blank(num_blank, temp);
             int a = 0;
             
+
             int ans=solve_with_count(temp,a);
             not_unique = false;
+
+            write_file(wfile, temp);
 
             //cout << ans << "&&&" << endl;
             
@@ -237,6 +251,7 @@ void SudoKu::create_random_sudoku(int num_game,bool if_unique) {
                 not_unique = false;
 
                 if (ans < 2) {
+                    /*
                     for (int i = 0; i < 9; i++) {
                         for (int j = 0; j < 9; j++) {
                             cout << temp2[i][j] << " ";
@@ -244,6 +259,9 @@ void SudoKu::create_random_sudoku(int num_game,bool if_unique) {
                         cout << endl;
                     }
                     cout << "-----------------" << endl;
+                    */
+
+                    write_file(wfile, temp2);
                 }
 
                 //cout << ans << "&&&" << endl;
@@ -271,22 +289,13 @@ void SudoKu::create_random_sudoku(int num_game,bool if_unique) {
                 cout << endl;
             }
             cout << "-----------------" << endl;
-            if (_access(game_dir.c_str(), 0) == -1)	// 如果文件夹不存在
-            {
-                int ret = _mkdir(game_dir.c_str());// 则创建
-                if (ret == -1) cout << "mkdir failed!" << endl;
-            }
 
-            string file_name = game_dir + to_string(i) + ".txt";
-            ofstream wfile;
-            wfile.open(file_name, ios::out);
             write_file(wfile, temp);
         }
-
-
- 
         
     }
+    wfile.close();
+
 }
 
 
@@ -295,6 +304,18 @@ void SudoKu::create_sudoku_endgame(int num_game, vector<vector<int>>& matrix) {
 
     int choice[9][2] = { {0,1},{0,2},{1,2},{3,4},{3,5},{4,5},{6,7},{6,8},{7,8} };
     srand((unsigned int)time(NULL));
+
+    /*
+    if (_access(endgame_dir.c_str(), 0) == -1)	// 如果文件夹不存在
+    {
+        int ret = _mkdir(endgame_dir.c_str());// 则创建
+        if (ret == -1) cout << "mkdir failed!" << endl;
+    }
+    */
+    string file_name = endgame_dir;
+    ofstream wfile;
+    wfile.open(file_name, ios::out);
+
     for (int num = 0; num < num_game; num++) {
         // 调整矩阵
         for (int i = 0; i < CHANGE_MAX_NUM; i++) {
@@ -312,17 +333,12 @@ void SudoKu::create_sudoku_endgame(int num_game, vector<vector<int>>& matrix) {
         }
         cout << "-----------------" << endl;
 
-        if (_access(endgame_dir.c_str(), 0) == -1)	// 如果文件夹不存在
-        {
-            int ret = _mkdir(endgame_dir.c_str());// 则创建
-            if (ret == -1) cout << "mkdir failed!" << endl;
-        }
 
-        string file_name = endgame_dir + to_string(num) + ".txt";
-        ofstream wfile;
-        wfile.open(file_name, ios::out);
+
+
         write_file(wfile, matrix);
     }
+    wfile.close();
 }
 
 
@@ -353,5 +369,7 @@ void SudoKu::write_file(ofstream& file, vector<vector<int>> matrix) {
         }
         file << std::endl;
     }
-    file.close();
+
+    file << "-----------------" << endl;
+    
 }

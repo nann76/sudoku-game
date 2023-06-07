@@ -25,8 +25,8 @@ public:
 
     bool active = false;
 
-    string endgame_dir = "./endgames/";
-    string game_dir = "./games/";
+    string endgame_dir = "endgames.txt";
+    string game_dir = "games.txt";
     enum GAME_LEVEL { NONE, EASY, MEDIUM, HARD };
     SudoKu() {};
     SudoKu(vector<vector<int>>& matrix);
