@@ -211,21 +211,24 @@ void SudoKu::create_sudoku_endgame(int num_game,vector<vector<int>>& matrix){
 }
 
 
-void SudoKu::read_file(ifstream& file,vector<vector<int>> matrix){
+void SudoKu::read_file(ifstream& file,vector<vector<int>> &matrix){
 
     string line;
+    int row=0;
     while (getline(file,line))
     {
+        // cout<<line<<endl;
        if(line.empty()){
         break;
        }
 
-        for(int i=0;i<9;i++){
-            for(int j=0;j<9;j++){
-                int num =(char)line[2*j]-'0';
-                matrix[i][j]=num;
-            }
+
+        for(int j=0;j<9;j++){
+            int num =(char)line[2*j]-'0';
+            matrix[row][j]=num;
         }
+        row++;
+        
 
     }
     file.close();

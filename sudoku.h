@@ -28,13 +28,13 @@ private:
 
     // int num_blank =5;
 
-
+public:
 
     bool init(vector<vector<int>>& matrix, int start);
     bool is_valid(int row, int col, int num, vector<vector<int>>& matrix);
     void swap_col(int m, int n, vector<vector<int>>& matrix);
     void set_blank(int nums, vector<vector<int>>& matrix);
-public:
+
     bool active = false;
 
     string endgame_dir="./endgames/";
@@ -50,7 +50,7 @@ public:
     void create_sudoku(vector<vector<int>> matrix);
 
     //读文件
-    void read_file(ifstream& file,vector<vector<int>> matrix);
+    void read_file(ifstream& file,vector<vector<int>>&matrix);
     //写文件
     void write_file(ofstream& file,vector<vector<int>> matrix);
 

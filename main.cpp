@@ -147,6 +147,37 @@ int main(int argc ,char * argv[]){
         assert(0,"m和r不能同时出现");
      }
 
+    if(redundant_s){
+        vector<vector<int>> matrix(9, vector<int>(9, 0));
+        SudoKu slove_game;
+
+        ifstream in;
+        in.open(sudoku_slove_path,ios::in);
+        slove_game.read_file(in,matrix);
+
+        // for(int i=0; i<9; i++){
+        //         for(int j=0; j<9; j++){
+        //             cout<<matrix[i][j]<<" ";
+        //         }
+        //         cout<<endl;
+        //     }
+        // cout<<"-----------------"<<endl;
+        cout<<"求解结果："<<endl;
+        bool activate=slove_game.init(matrix,0);
+
+                for(int i=0; i<9; i++){
+                for(int j=0; j<9; j++){
+                    cout<<matrix[i][j]<<" ";
+                }
+                cout<<endl;
+            }
+        // cout<<"-----------------"<<endl;
+
+
+
+
+    }
+
 
     //调用生成终局
     if(if_gen_sudoku_endgame){
