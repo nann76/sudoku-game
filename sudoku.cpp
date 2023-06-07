@@ -45,7 +45,72 @@ bool SudoKu::init(vector<vector<int>>& matrix, int start)
     }
 }
 
+bool get_RC(int& row, int& col, vector<vector<int>>& matrix)
+{
+    for (row = 0; row < 9; row++)
+        for (col = 0; col < 9; col++)
+            if (matrix[row][col] == 0)
+                return true;
+    return false;
+}
 
+//本函数可以获得全部的解的数量，但当有2个时则返回
+bool not_unique = false;
+int SudoKu::solve_with_count(vector<vector<int>>& matrix,int  &ans) {
+   // cout << start << "start" << endl;
+
+    int i, j;
+    if (get_RC(i, j, matrix))
+    {
+        for (int num = 1; num <= 9; num++)
+        {
+            if (not_unique) {
+            
+                return ans;
+            }
+
+            if (is_valid(i, j, num, matrix))
+
+            {
+                //cout << i << "  "<<  j<< "  " << num << "  " << endl;
+                matrix[i][j] = num;
+                /*
+                for (int i = 0; i < 9; i++) {
+                    for (int j = 0; j < 9; j++) {
+                        cout << matrix[i][j] << " ";
+                    }
+                    cout << endl;
+                }
+                cout << "-----------------" << endl;
+                */
+                ans = solve_with_count(matrix,ans);
+                matrix[i][j] = 0;
+                /*
+
+                for (int i = 0; i < 9; i++) {
+                    for (int j = 0; j < 9; j++) {
+                        cout << matrix[i][j] << " ";
+                    }
+                    cout << endl;
+                }
+                cout << "-----------------" << endl;
+
+                */
+
+            }
+        }
+    }
+    else {
+       ans++;
+
+       if(ans==2)
+       not_unique = true;
+    }
+        
+    return ans;
+
+    
+}
 
 
 
@@ -77,11 +142,13 @@ void SudoKu::set_blank(int nums, vector<vector<int>>& matrix)
 }
 
 
-void SudoKu::create_random_sudoku(int num_game, bool if_unique) {
+
+
+void SudoKu::create_random_sudoku(int num_game,bool if_unique) {
 
 
     // 挖空数
-    int num_blank = 10;
+    int num_blank = 20;
 
     extern bool redundant_m;
     extern int game_level;
@@ -95,10 +162,10 @@ void SudoKu::create_random_sudoku(int num_game, bool if_unique) {
         switch (game_level)
         {
         case GAME_LEVEL::NONE:
-            num_blank = 10;
+            num_blank = 20;
             break;
         case GAME_LEVEL::EASY:
-            num_blank = 10;
+            num_blank = 25;
             break;
         case GAME_LEVEL::MEDIUM:
             num_blank = 30;
@@ -107,12 +174,12 @@ void SudoKu::create_random_sudoku(int num_game, bool if_unique) {
             num_blank = 60;
             break;
         default:
-            num_blank = 10;
+            num_blank = 20;
             break;
         }
     }
 
-    // 新建
+    // 新建矩阵
     vector<vector<int>> matrix(9, vector<int>(9, 0));
     this->active = this->init(matrix, 0);
 
@@ -120,41 +187,105 @@ void SudoKu::create_random_sudoku(int num_game, bool if_unique) {
     srand((unsigned int)time(NULL));
 
     for (int i = 0; i < num_game; i++) {
+
         for (int i = 0; i < CHANGE_MAX_NUM; i++) {
             int index = rand() % 9;
             matrix[choice[index][0]].swap(matrix[choice[index][1]]);
             swap_col(choice[index][0], choice[index][1], matrix);
         }
 
-        // 深拷贝初始
-        vector<vector<int>> temp(matrix);
-
+        
         // 根据给定范围设置挖空数
         if (redundant_r) {
             num_blank = rand() % (high_range - low_range + 1) + low_range;
         }
 
-        // 挖空
-        set_blank(num_blank, temp);
 
-        // 输出打印
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                cout << temp[i][j] << " ";
+
+        if (if_unique) {
+            num_blank = 40;
+
+            // 深拷贝初始
+            vector<vector<int>> temp(matrix);
+            // 挖空
+            set_blank(num_blank, temp);
+            int a = 0;
+            
+            int ans=solve_with_count(temp,a);
+            not_unique = false;
+
+            //cout << ans << "&&&" << endl;
+            
+            int i = 0;
+            while (ans >= 2) {
+
+
+                for (int i = 0; i < CHANGE_MAX_NUM; i++) {
+                    int index = rand() % 9;
+                    matrix[choice[index][0]].swap(matrix[choice[index][1]]);
+                    swap_col(choice[index][0], choice[index][1], matrix);
+                }
+
+
+                vector<vector<int>> temp2(matrix);
+                set_blank(num_blank, temp2);
+
+
+                a = 0;
+                i++;
+                ans = solve_with_count(temp2, a);
+                not_unique = false;
+
+                if (ans < 2) {
+                    for (int i = 0; i < 9; i++) {
+                        for (int j = 0; j < 9; j++) {
+                            cout << temp2[i][j] << " ";
+                        }
+                        cout << endl;
+                    }
+                    cout << "-----------------" << endl;
+                }
+
+                //cout << ans << "&&&" << endl;
             }
-            cout << endl;
-        }
-        cout << "-----------------" << endl;
-        if (_access(game_dir.c_str(), 0) == -1)	// 如果文件夹不存在
-        {
-            int ret = _mkdir(game_dir.c_str());// 则创建
-            if (ret == -1) cout << "mkdir failed!" << endl;
+
+            cout << i << "次" << endl;
+
+        
+        
         }
 
-        string file_name = game_dir + to_string(i) + ".txt";
-        ofstream wfile;
-        wfile.open(file_name, ios::out);
-        write_file(wfile, temp);
+        else {
+            // 深拷贝初始
+            vector<vector<int>> temp(matrix);
+            // 挖空
+            set_blank(num_blank, temp);
+
+
+
+            // 输出打印
+            for (int i = 0; i < 9; i++) {
+                for (int j = 0; j < 9; j++) {
+                    cout << temp[i][j] << " ";
+                }
+                cout << endl;
+            }
+            cout << "-----------------" << endl;
+            if (_access(game_dir.c_str(), 0) == -1)	// 如果文件夹不存在
+            {
+                int ret = _mkdir(game_dir.c_str());// 则创建
+                if (ret == -1) cout << "mkdir failed!" << endl;
+            }
+
+            string file_name = game_dir + to_string(i) + ".txt";
+            ofstream wfile;
+            wfile.open(file_name, ios::out);
+            write_file(wfile, temp);
+        }
+
+
+ 
+        
     }
 }
 
