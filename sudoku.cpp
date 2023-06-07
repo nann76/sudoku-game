@@ -60,7 +60,7 @@ void SudoKu::swap_col(int m, int n, vector<vector<int>>& matrix)
 
 void SudoKu::set_blank(int nums, vector<vector<int>>& matrix)
 {
-    srand(time(NULL));
+    srand((unsigned int)time(NULL));
     while (nums)
     {
         int row = rand() % 9;
@@ -130,7 +130,7 @@ void SudoKu::create_random_sudoku(int num_game, bool if_unique) {
     this->active = this->init(matrix, 0);
 
     int choice[9][2] = { {0,1},{0,2},{1,2},{3,4},{3,5},{4,5},{6,7},{6,8},{7,8} };
-    srand(time(NULL));
+    srand((unsigned int)time(NULL));
 
     for (int i = 0; i < num_game; i++) {
 
@@ -162,7 +162,10 @@ void SudoKu::create_random_sudoku(int num_game, bool if_unique) {
         }
         cout << "-----------------" << endl;
         if (_access(game_dir.c_str(), 0) == -1)	//如果文件夹不存在
-            _mkdir(game_dir.c_str());				//则创建
+        {
+            int ret = _mkdir(game_dir.c_str());//则创建
+            if (ret == -1) cout << "mkdir failed!" << endl;
+        }
 
         string file_name = game_dir + to_string(i) + ".txt";
         ofstream wfile;
@@ -181,7 +184,7 @@ void SudoKu::create_random_sudoku(int num_game, bool if_unique) {
 void SudoKu::create_sudoku_endgame(int num_game, vector<vector<int>>& matrix) {
 
     int choice[9][2] = { {0,1},{0,2},{1,2},{3,4},{3,5},{4,5},{6,7},{6,8},{7,8} };
-    srand(time(NULL));
+    srand((unsigned int)time(NULL));
     for (int num = 0; num < num_game; num++) {
         //调整矩阵
         for (int i = 0; i < CHANGE_MAX_NUM; i++) {
@@ -202,7 +205,10 @@ void SudoKu::create_sudoku_endgame(int num_game, vector<vector<int>>& matrix) {
 
 
         if (_access(endgame_dir.c_str(), 0) == -1)	//如果文件夹不存在
-            _mkdir(endgame_dir.c_str());				//则创建
+        {
+            int ret = _mkdir(endgame_dir.c_str());//则创建
+            if (ret == -1) cout << "mkdir failed!" << endl;
+        }
 
         string file_name = endgame_dir + to_string(num) + ".txt";
         ofstream wfile;
@@ -227,7 +233,7 @@ void SudoKu::read_file(ifstream& file, vector<vector<int>>& matrix) {
 
 
         for (int j = 0; j < 9; j++) {
-            int num = (char)line[2 * j] - '0';
+            int num = (char)line[2 * (long long)j] - '0';
             matrix[row][j] = num;
         }
         row++;
