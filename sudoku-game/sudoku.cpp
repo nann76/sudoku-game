@@ -166,7 +166,9 @@ void SudoKu::create_random_sudoku(int num_game,bool if_unique) {
             int ans=solve_with_count(temp,a);
             not_unique = false;
 
-            write_file(wfile, temp);
+            if (ans < 2) {
+                write_file(wfile, temp);
+            }
             
             int i = 0;
             while (ans >= 2) {
