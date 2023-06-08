@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sudoku", "sudoku.vcxproj", "{13B79DF3-78EF-4FE1-9E39-79EC1C8B5712}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTestForSudoku", "..\UnitTestForSudoku\UnitTestForSudoku.vcxproj", "{38E2C8E1-DB16-4479-B703-124440D4D527}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{13B79DF3-78EF-4FE1-9E39-79EC1C8B5712}.Release|x64.Build.0 = Release|x64
 		{13B79DF3-78EF-4FE1-9E39-79EC1C8B5712}.Release|x86.ActiveCfg = Release|Win32
 		{13B79DF3-78EF-4FE1-9E39-79EC1C8B5712}.Release|x86.Build.0 = Release|Win32
+		{38E2C8E1-DB16-4479-B703-124440D4D527}.Debug|x64.ActiveCfg = Debug|x64
+		{38E2C8E1-DB16-4479-B703-124440D4D527}.Debug|x64.Build.0 = Debug|x64
+		{38E2C8E1-DB16-4479-B703-124440D4D527}.Debug|x86.ActiveCfg = Debug|Win32
+		{38E2C8E1-DB16-4479-B703-124440D4D527}.Debug|x86.Build.0 = Debug|Win32
+		{38E2C8E1-DB16-4479-B703-124440D4D527}.Release|x64.ActiveCfg = Release|x64
+		{38E2C8E1-DB16-4479-B703-124440D4D527}.Release|x64.Build.0 = Release|x64
+		{38E2C8E1-DB16-4479-B703-124440D4D527}.Release|x86.ActiveCfg = Release|Win32
+		{38E2C8E1-DB16-4479-B703-124440D4D527}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
