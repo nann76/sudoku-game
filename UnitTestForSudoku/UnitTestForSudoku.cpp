@@ -53,19 +53,43 @@ namespace UnitTestForSudoku
 			vector<vector<int>> matrix2 = {
 				{0, 0, 8, 0, 3, 0, 0, 0, 4},
 				{3, 1, 0, 4, 6, 0, 9, 0, 0},
-				{0, 0, 5, 0, 0, 8, 3, 2, 1 },
-				{4, 0, 0, 3, 5, 6, 0, 9, 0 },
-				{7, 8, 9, 2, 0, 1, 0, 6, 0 },
-				{0, 0, 6, 8, 7, 9, 0, 0, 2 },
-				{0, 9, 7, 0, 1, 3, 0, 4, 0 },
-				{0, 6, 4, 9, 8, 7, 1, 3, 5 },
-				{1, 5, 3, 6, 2, 4, 8, 7, 9 }
+				{0, 0, 5, 0, 0, 8, 3, 2, 1},
+				{4, 0, 0, 3, 5, 6, 0, 9, 0},
+				{7, 8, 9, 2, 0, 1, 0, 6, 0},
+				{0, 0, 6, 8, 7, 9, 0, 0, 2},
+				{0, 9, 7, 0, 1, 3, 0, 4, 0},
+				{0, 6, 4, 9, 8, 7, 1, 3, 5},
+				{1, 5, 3, 6, 2, 4, 8, 7, 9}
 			};
-
 
 			int num2 = 0;
 			Assert::AreEqual(1, test2.solve_with_count(matrix2, num2));
 			Assert::AreEqual(1, num2);
+		}
+
+		TEST_METHOD(TestMethod3)
+		{
+			// ≤‚ ‘SudoKu::init
+			SudoKu test;
+			vector<vector<int>> matrix(9, vector<int>(9, 0));
+			vector<vector<int>> matrix_result = {
+				{1, 2, 3, 4, 5, 6, 7, 8, 9},
+				{4, 5, 6, 7, 8, 9, 1, 2, 3},
+				{7, 8, 9, 1, 2, 3, 4, 5, 6},
+				{2, 1, 4, 3, 6, 5, 8, 9, 7},
+				{3, 6, 5, 8, 9, 7, 2, 1, 4},
+				{8, 9, 7, 2, 1, 4, 3, 6, 5},
+				{5, 3, 1, 6, 4, 2, 9, 7, 8},
+				{6, 4, 2, 9, 7, 8, 5, 3, 1},
+				{9, 7, 8, 5, 3, 1, 6, 4, 2}
+			};
+			bool res = test.init(matrix, 0);
+			for (int i = 0; i < 9; i++) {
+				for (int j = 0; j < 9; j++) {
+					Assert::AreEqual(matrix[i][j], matrix_result[i][j]);
+				}
+			}
+			Assert::AreEqual(true, res);
 		}
 	};
 }
