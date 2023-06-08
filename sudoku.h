@@ -1,10 +1,10 @@
 #ifndef SUDOKU_H
 #define SUDOKU_H
 #include<iostream>
-#include<vector>
-#include<time.h>
+#include <vector>
+#include <time.h>
 #include <fstream>
-#include<string>
+#include <string>
 #include <io.h>
 #include <direct.h>
 
@@ -34,11 +34,6 @@ public:
     void create_random_sudoku(int num_game, bool if_unique);
     // 创建终局 
     void create_sudoku_endgame(int num_game, vector<vector<int>>& matrix);
-    //创建解唯一
-
-    void swap_col_row(vector<vector<int>>& matrix);
-
-
     // 读文件
     void read_file(ifstream& file, vector<vector<int>>& matrix);
     // 写文件

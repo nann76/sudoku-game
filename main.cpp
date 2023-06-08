@@ -7,7 +7,6 @@
 using namespace std;
 
 
-
 int main(int argc, char* argv[]) {
     // 参数，只有-u后无参数
     char getopt_arg[] = "c:s:n:m:r:u";
