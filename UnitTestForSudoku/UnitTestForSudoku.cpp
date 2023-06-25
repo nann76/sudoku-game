@@ -91,5 +91,30 @@ namespace UnitTestForSudoku
 			}
 			Assert::AreEqual(true, res);
 		}
+
+		TEST_METHOD(TestMethod4)
+		{
+			// ≤‚ ‘SudoKu::is_valid
+			SudoKu test;
+			vector<vector<int>> matrix = {
+				{1, 2, 3, 4, 5, 6, 7, 0, 9},
+				{4, 5, 6, 7, 8, 9, 0, 2, 3},
+				{7, 8, 9, 1, 2, 3, 4, 5, 6},
+				{2, 0, 4, 3, 6, 5, 8, 9, 7},
+				{3, 6, 5, 8, 9, 7, 2, 1, 4},
+				{8, 9, 7, 2, 1, 4, 3, 6, 5},
+				{5, 3, 1, 6, 4, 2, 9, 7, 8},
+				{6, 4, 2, 9, 7, 8, 5, 3, 1},
+				{9, 7, 8, 5, 3, 1, 6, 4, 2}
+			};
+			bool res1 = test.is_valid(2, 3, 0, matrix);
+			bool res2 = test.is_valid(0, 8, 8, matrix);
+			bool res3 = test.is_valid(3, 4, 7, matrix);
+			bool res4 = test.is_valid(1, 1, 1, matrix);
+			Assert::AreEqual(true, res1);
+			Assert::AreEqual(false, res2);
+			Assert::AreEqual(false, res3);
+			Assert::AreEqual(false, res4);
+		}
 	};
 }
