@@ -116,5 +116,32 @@ namespace UnitTestForSudoku
 			Assert::AreEqual(false, res3);
 			Assert::AreEqual(false, res4);
 		}
+
+		TEST_METHOD(TestMethod5)
+		{
+			// ≤‚ ‘Sudoku::set_blank
+			SudoKu test;
+			vector<vector<int>> matrix = {
+				{1, 2, 3, 4, 5, 6, 7, 8, 9},
+				{4, 5, 6, 7, 8, 9, 1, 2, 3},
+				{7, 8, 9, 1, 2, 3, 4, 5, 6},
+				{2, 1, 4, 3, 6, 5, 8, 9, 7},
+				{3, 6, 5, 8, 9, 7, 2, 1, 4},
+				{8, 9, 7, 2, 1, 4, 3, 6, 5},
+				{5, 3, 1, 6, 4, 2, 9, 7, 8},
+				{6, 4, 2, 9, 7, 8, 5, 3, 1},
+				{9, 7, 8, 5, 3, 1, 6, 4, 2}
+			};
+			test.set_blank(21, matrix);
+			int blank_num = 0;
+			for (int i = 0; i < matrix.size(); i++) {
+				for (int j = 0; j < matrix[0].size(); j++) {
+					if (matrix[i][j] == 0) {
+						blank_num++;
+					}
+				}
+			}
+			Assert::AreEqual(21, blank_num);
+		}
 	};
 }
