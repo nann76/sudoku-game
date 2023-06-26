@@ -143,5 +143,57 @@ namespace UnitTestForSudoku
 			}
 			Assert::AreEqual(21, blank_num);
 		}
+
+		TEST_METHOD(TestMethod6)
+		{
+			// 测试SudoKu::create_random_sudoku
+			// 测试难度，唯一解
+			SudoKu test;
+			redundant_m = true;
+			game_level = 1;
+			redundant_r = false;
+			low_range = 25;
+			high_range = 50;
+			test.create_random_sudoku(1, true);
+			vector<vector<int>> matrix(9, vector<int>(9, 0));
+
+			ifstream in;
+			in.open("games.txt", ios::in);
+			string line;
+			int row = 0;
+
+			while (getline(in, line))
+			{
+				if (line.empty()) {
+					break;
+				}
+				if (row == 9) {
+					row = 0;
+				}
+				else {
+					for (int j = 0; j < 9; j++) {
+						int num = (char)line[2 * (long long)j] - '0';
+						matrix[row][j] = num;
+					}
+					row++;
+				}
+			}
+			in.close();
+			int count = 0;
+			for (int i = 0; i < matrix.size(); i++) {
+				for (int j = 0; j < matrix[i].size(); j++) {
+					if (matrix[i][j] == 0) {
+						count++;
+					}
+				}
+			}
+			cout << count << endl;
+			Assert::AreEqual((count == 25), true);
+			int temp = 0;
+			Assert::AreEqual(test.solve_with_count(matrix, temp), 1);
+
+			//test.create_random_sudoku(1, false);
+
+		}
 	};
 }
