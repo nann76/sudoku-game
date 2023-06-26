@@ -234,3 +234,5 @@ TEST(create_random_sudoku,null)
         temp = 0;
             EXPECT_EQ(test.solve_with_count(matrix, temp), 1);
         }
+
+Test
