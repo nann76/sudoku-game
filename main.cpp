@@ -6,7 +6,11 @@
 #pragma warning(disable:4996)
 using namespace std;
 
+#include "gtest/gtest.h"
 
+#define TEST
+
+#ifndef TEST
 int main(int argc, char* argv[]) {
     // 参数，只有-u后无参数
     char getopt_arg[] = "c:s:n:m:r:u";
@@ -131,3 +135,14 @@ int main(int argc, char* argv[]) {
         gen_game.create_random_sudoku(num_sudoku_game, redundant_u);
     }
 }
+#endif
+
+#ifdef TEST
+
+int main(int argc, char* argv[]) {
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+
+}
+
+#endif

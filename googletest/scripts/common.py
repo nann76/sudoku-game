@@ -1,6 +1,4 @@
-#!/usr/bin/env python
-#
-# Copyright 2019 Google LLC.  All Rights Reserved.
+# Copyright 2013 Google Inc. All Rights Reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are
@@ -27,33 +25,59 @@
 # THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-"""Tests Google Test's gtest skip in environment setup  behavior.
 
-This script invokes gtest_skip_in_environment_setup_test_ and verifies its
-output.
-"""
+"""Shared utilities for writing scripts for Google Test/Mock."""
 
+__author__ = 'wan@google.com (Zhanyong Wan)'
+
+
+import os
 import re
 
-from googletest.test import gtest_test_utils
 
-# Path to the gtest_skip_in_environment_setup_test binary
-EXE_PATH = gtest_test_utils.GetTestExecutablePath('gtest_skip_test')
-
-OUTPUT = gtest_test_utils.Subprocess([EXE_PATH]).output
-
-
-# Test.
-class SkipEntireEnvironmentTest(gtest_test_utils.TestCase):
-
-  def testSkipEntireEnvironmentTest(self):
-    self.assertIn('Skipped\nskipping single test\n', OUTPUT)
-    skip_fixture = 'Skipped\nskipping all tests for this fixture\n'
-    self.assertIsNotNone(
-        re.search(skip_fixture + '.*' + skip_fixture, OUTPUT, flags=re.DOTALL),
-        repr(OUTPUT))
-    self.assertNotIn('FAILED', OUTPUT)
+# Matches the line from 'svn info .' output that describes what SVN
+# path the current local directory corresponds to.  For example, in
+# a googletest SVN workspace's trunk/test directory, the output will be:
+#
+# URL: https://googletest.googlecode.com/svn/trunk/test
+_SVN_INFO_URL_RE = re.compile(r'^URL: https://(\w+)\.googlecode\.com/svn(.*)')
 
 
-if __name__ == '__main__':
-  gtest_test_utils.Main()
+def GetCommandOutput(command):
+  """Runs the shell command and returns its stdout as a list of lines."""
+
+  f = os.popen(command, 'r')
+  lines = [line.strip() for line in f.readlines()]
+  f.close()
+  return lines
+
+
+def GetSvnInfo():
+  """Returns the project name and the current SVN workspace's root path."""
+
+  for line in GetCommandOutput('svn info .'):
+    m = _SVN_INFO_URL_RE.match(line)
+    if m:
+      project = m.group(1)  # googletest or googlemock
+      rel_path = m.group(2)
+      root = os.path.realpath(rel_path.count('/') * '../')
+      return project, root
+
+  return None, None
+
+
+def GetSvnTrunk():
+  """Returns the current SVN workspace's trunk root path."""
+
+  _, root = GetSvnInfo()
+  return root + '/trunk' if root else None
+
+
+def IsInGTestSvn():
+  project, _ = GetSvnInfo()
+  return project == 'googletest'
+
+
+def IsInGMockSvn():
+  project, _ = GetSvnInfo()
+  return project == 'googlemock'

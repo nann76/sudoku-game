@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# Copyright 2019, Google Inc.
+# Copyright 2009, Google Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -29,26 +29,50 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-"""Verifies that SetUpTestSuite and TearDownTestSuite errors are noticed."""
+"""upload_gtest.py v0.1.0 -- uploads a Google Test patch for review.
 
-from googletest.test import gtest_test_utils
+This simple wrapper passes all command line flags and
+--cc=googletestframework@googlegroups.com to upload.py.
 
-COMMAND = gtest_test_utils.GetTestExecutablePath(
-    'googletest-setuptestsuite-test_')
+USAGE: upload_gtest.py [options for upload.py]
+"""
+
+__author__ = 'wan@google.com (Zhanyong Wan)'
+
+import os
+import sys
+
+CC_FLAG = '--cc='
+GTEST_GROUP = 'googletestframework@googlegroups.com'
 
 
-class GTestSetUpTestSuiteTest(gtest_test_utils.TestCase):
+def main():
+  # Finds the path to upload.py, assuming it is in the same directory
+  # as this file.
+  my_dir = os.path.dirname(os.path.abspath(__file__))
+  upload_py_path = os.path.join(my_dir, 'upload.py')
 
-  def testSetupErrorAndTearDownError(self):
-    p = gtest_test_utils.Subprocess(COMMAND)
-    self.assertNotEqual(p.exit_code, 0, msg=p.output)
+  # Adds Google Test discussion group to the cc line if it's not there
+  # already.
+  upload_py_argv = [upload_py_path]
+  found_cc_flag = False
+  for arg in sys.argv[1:]:
+    if arg.startswith(CC_FLAG):
+      found_cc_flag = True
+      cc_line = arg[len(CC_FLAG):]
+      cc_list = [addr for addr in cc_line.split(',') if addr]
+      if GTEST_GROUP not in cc_list:
+        cc_list.append(GTEST_GROUP)
+      upload_py_argv.append(CC_FLAG + ','.join(cc_list))
+    else:
+      upload_py_argv.append(arg)
 
-    self.assertIn(
-        '[  FAILED  ] SetupFailTest: SetUpTestSuite or TearDownTestSuite\n'
-        '[  FAILED  ] TearDownFailTest: SetUpTestSuite or TearDownTestSuite\n'
-        '\n'
-        ' 2 FAILED TEST SUITES\n',
-        p.output)
+  if not found_cc_flag:
+    upload_py_argv.append(CC_FLAG + GTEST_GROUP)
+
+  # Invokes upload.py with the modified command line flags.
+  os.execv(upload_py_path, upload_py_argv)
+
 
 if __name__ == '__main__':
-  gtest_test_utils.Main()
+  main()
