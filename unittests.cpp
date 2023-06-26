@@ -1,6 +1,6 @@
 # include "gtest/gtest.h"
 # include "sudoku.h"
-//#define ADD_COMMON
+#define ADD_COMMON
 
 #ifdef ADD_COMMON
 # include "common.h"
@@ -11,7 +11,7 @@ extern bool if_gen_sudoku_endgame;
 extern int num_sudoku_endgame;
 
 extern bool redundant_s;
-extern char sudoku_slove_path[256];
+extern char sudoku_solve_path[256];
 
 extern bool redundant_n;
 extern int num_sudoku_game;
@@ -313,7 +313,7 @@ TEST(read_file ,null){   /* NOLINT */
 
     ifstream in;
     in.open("games.txt", ios::in);
-    cout << sudoku_slove_path << endl;
+    cout << sudoku_solve_path << endl;
     slove_game.read_file(in, matrix);
 }
 

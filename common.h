@@ -8,7 +8,7 @@ int num_sudoku_endgame = 0;
 
 // 求解数独的路径 -s
 bool redundant_s = false;
-char sudoku_slove_path[256];
+char sudoku_solve_path[256];
 
 // 需要的游戏数量 -n
 bool redundant_n = false;

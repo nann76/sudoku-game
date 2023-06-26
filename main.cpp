@@ -2,7 +2,7 @@
 #include "getopt.h"
 #include "gtest/gtest.h"
 
-//#define TEST_SUDOKU
+#define TEST_SUDOKU
 
 #ifndef TEST_SUDOKU
 #include"common.h"
@@ -16,13 +16,13 @@ int main(int argc, char* argv[]) {
     int opt;
 
     while ((opt = getopt(argc, argv, getopt_arg)) != -1) {
+        char* endptr = nullptr;
         switch (opt){
             case 'c':
                 my_assert(!if_gen_sudoku_endgame, "redundant optarg  -c");
                 if_gen_sudoku_endgame = true;
-
                 // 取终局的数量
-                num_sudoku_endgame = atoi(optarg);
+                num_sudoku_endgame = (int)strtol(optarg, &endptr, 10);
                 my_assert(num_sudoku_endgame != 0, "optarg  -c not a num ");
                 my_assert(1 <= num_sudoku_endgame && num_sudoku_endgame <= 1000000, "终局的数量不在范围内");
                 break;
@@ -30,14 +30,14 @@ int main(int argc, char* argv[]) {
                 my_assert(!redundant_s, "redundant optarg  -s");
                 redundant_s = true;
                 // 取求解路径
-                strcpy(sudoku_slove_path, optarg);
+                strcpy(sudoku_solve_path, optarg);
                 break;
             case 'n':
                 my_assert(!redundant_n, "redundant optarg  -n");
                 redundant_n = true;
 
                 // 取需要的游戏数量
-                num_sudoku_game = atoi(optarg);
+                num_sudoku_game = (int)strtol(optarg, &endptr, 10);
                 my_assert(num_sudoku_game != 0, "optarg  -n not a num ");
                 my_assert(1 <= num_sudoku_game && num_sudoku_game <= 1000, "需要的游戏数量不在范围内");
                 break;
@@ -46,7 +46,7 @@ int main(int argc, char* argv[]) {
                 redundant_m = true;
 
                 // 取需要的游戏数量
-                game_level = atoi(optarg);
+                game_level = (int)strtol(optarg, &endptr, 10);
                 my_assert(game_level != 0, "optarg  -m not a num ");
                 my_assert(1 <= game_level && game_level <= 3, "游戏难度不在范围内");
                 break;
@@ -60,17 +60,16 @@ int main(int argc, char* argv[]) {
                 char* up;
 
                 low = strtok(temp, "~");
-                low_range = atoi(low);
-                up = strtok(NULL, "~");
-                high_range = atoi(up);
-
+                low_range = (int)strtol(low, &endptr, 10);
+                up = strtok(nullptr, "~");
+                high_range = (int)strtol(up, &endptr, 10);
                 my_assert(low_range != 0, "optarg  -u  low range not a num ");
                 my_assert(high_range != 0, "optarg  -u  high range not a num ");
 
                 my_assert(20 <= low_range && low_range <= 55, "挖空的范围low_range 不在过规定范围内");
                 my_assert(20 <= high_range && high_range <= 55, "挖空的范围high_range 不在过规定范围内");
                 if (high_range < low_range) {
-                    my_assert(0, "挖空的范围low range 小于high_range ");
+                    my_assert(false, "挖空的范围low range 小于high_range ");
                 }
                 break;
             case 'u':
@@ -88,34 +87,34 @@ int main(int argc, char* argv[]) {
     // 判断参数同时出现
     if (redundant_m) {
         if (!redundant_n) {
-            my_assert(0, "m与n未同时出现");
+            my_assert(false, "m与n未同时出现");
         }
     }
 
     if (redundant_r) {
         if (!redundant_n) {
-            my_assert(0, "r与n未同时出现");
+            my_assert(false, "r与n未同时出现");
         }
     }
 
     if (redundant_u) {
         if (!redundant_n) {
-            my_assert(0, "u与n未同时出现");
+            my_assert(false, "u与n未同时出现");
         }
     }
 
     if (redundant_m && redundant_r) {
-        my_assert(0, "m和r不能同时出现");
+        my_assert(false, "m和r不能同时出现");
     }
 
     if (redundant_s) {
         vector<vector<int>> matrix(9, vector<int>(9, 0));
-        SudoKu slove_game;
+        SudoKu solve_game;
 
         ifstream in;
-        in.open(sudoku_slove_path, ios::in);
-        cout << sudoku_slove_path << endl;
-        slove_game.read_file(in, matrix);
+        in.open(sudoku_solve_path, ios::in);
+        cout << sudoku_solve_path << endl;
+        solve_game.read_file(in, matrix);
 
     }
 
