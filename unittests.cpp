@@ -1,19 +1,33 @@
-//
-// Created by nan on 2023/6/26.
-//
-
 # include "gtest/gtest.h"
-#include "sudoku.h"
-#include "common.h"
-/*
-TEST(TestCaseName, TestName) {
-  EXPECT_EQ(1, 1);
-  EXPECT_TRUE(true);
-}
+# include "sudoku.h"
+//#define ADD_COMMON
 
-*/
-TEST(swap_col, null) {
-    SudoKu test1;
+#ifdef ADD_COMMON
+# include "common.h"
+#endif
+
+#ifndef ADD_COMMON
+extern bool if_gen_sudoku_endgame;
+extern int num_sudoku_endgame;
+
+extern bool redundant_s;
+extern char sudoku_slove_path[256];
+
+extern bool redundant_n;
+extern int num_sudoku_game;
+
+extern bool redundant_m;
+extern int game_level;
+
+extern bool redundant_r;
+extern int low_range;
+extern int high_range;
+
+extern bool redundant_u;
+extern bool if_unique;
+#endif
+
+TEST(swap_col, null) {  /* NOLINT */
     vector<vector<int>> matrix1 = {
             {0, 2, 3, 4, 5, 6, 7, 9, 8},
             {4, 5, 6, 7, 8, 9, 1, 3, 2},
@@ -36,7 +50,7 @@ TEST(swap_col, null) {
             {9, 8, 7, 5, 3, 1, 6, 2, 4},
             {6, 2, 4, 9, 7, 8, 5, 1, 3}
     };
-    test1.swap_col(1, 2, matrix1);
+    SudoKu::swap_col(1, 2, matrix1);
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 9; j++) {
             EXPECT_EQ(matrix1[i][j], matrix1_result[i][j]);
@@ -45,7 +59,7 @@ TEST(swap_col, null) {
 }
 
 
-TEST(solve_with_count, null) {
+TEST(solve_with_count, null) {  /* NOLINT */
 
     // 测试函数SudoKu::solve_with_count
     SudoKu test2;
@@ -67,7 +81,7 @@ TEST(solve_with_count, null) {
 }
 
 
-TEST(init, null) {
+TEST(init, null) {   /* NOLINT */
     // 测试SudoKu::init
     SudoKu test;
     vector<vector<int>> matrix(9, vector<int>(9, 0));
@@ -92,10 +106,9 @@ TEST(init, null) {
 }
 
 
-TEST(is_valid,null){
-        // 测试SudoKu::is_valid
-        SudoKu test;
-        vector<vector<int>> matrix = {
+TEST(is_valid,null){     /* NOLINT */
+    // 测试SudoKu::is_valid
+    vector<vector<int>> matrix = {
         {1, 2, 3, 4, 5, 6, 7, 0, 9},
         {4, 5, 6, 7, 8, 9, 0, 2, 3},
         {7, 8, 9, 1, 2, 3, 4, 5, 6},
@@ -105,136 +118,134 @@ TEST(is_valid,null){
         {5, 3, 1, 6, 4, 2, 9, 7, 8},
         {6, 4, 2, 9, 7, 8, 5, 3, 1},
         {9, 7, 8, 5, 3, 1, 6, 4, 2}
-        };
-        bool res1 = test.is_valid(2, 3, 0, matrix);
-        bool res2 = test.is_valid(0, 8, 8, matrix);
-        bool res3 = test.is_valid(3, 4, 7, matrix);
-        bool res4 = test.is_valid(1, 1, 1, matrix);
-        EXPECT_EQ(true, res1);
-        EXPECT_EQ(false, res2);
-        EXPECT_EQ(false, res3);
-        EXPECT_EQ(false, res4);
-
+    };
+    bool res1 = SudoKu::is_valid(2, 3, 0, matrix);
+    bool res2 = SudoKu::is_valid(0, 8, 8, matrix);
+    bool res3 = SudoKu::is_valid(3, 4, 7, matrix);
+    bool res4 = SudoKu::is_valid(1, 1, 1, matrix);
+    EXPECT_EQ(true, res1);
+    EXPECT_EQ(false, res2);
+    EXPECT_EQ(false, res3);
+    EXPECT_EQ(false, res4);
 }
 
-TEST(set_blank,null){
-                // 测试Sudoku::set_blank
-        SudoKu test;
-        vector<vector<int>> matrix = {
-            {1, 2, 3, 4, 5, 6, 7, 8, 9},
-            {4, 5, 6, 7, 8, 9, 1, 2, 3},
-            {7, 8, 9, 1, 2, 3, 4, 5, 6},
-            {2, 1, 4, 3, 6, 5, 8, 9, 7},
-            {3, 6, 5, 8, 9, 7, 2, 1, 4},
-            {8, 9, 7, 2, 1, 4, 3, 6, 5},
-            {5, 3, 1, 6, 4, 2, 9, 7, 8},
-            {6, 4, 2, 9, 7, 8, 5, 3, 1},
-            {9, 7, 8, 5, 3, 1, 6, 4, 2}
-        };
-        test.set_blank(21, matrix);
-        int blank_num = 0;
-        for (int i = 0; i < matrix.size(); i++) {
-            for (int j = 0; j < matrix[0].size(); j++) {
-                if (matrix[i][j] == 0) {
-                    blank_num++;
-                }
+TEST(set_blank,null){    /* NOLINT */
+    // 测试Sudoku::set_blank
+    vector<vector<int>> matrix = {
+        {1, 2, 3, 4, 5, 6, 7, 8, 9},
+        {4, 5, 6, 7, 8, 9, 1, 2, 3},
+        {7, 8, 9, 1, 2, 3, 4, 5, 6},
+        {2, 1, 4, 3, 6, 5, 8, 9, 7},
+        {3, 6, 5, 8, 9, 7, 2, 1, 4},
+        {8, 9, 7, 2, 1, 4, 3, 6, 5},
+        {5, 3, 1, 6, 4, 2, 9, 7, 8},
+        {6, 4, 2, 9, 7, 8, 5, 3, 1},
+        {9, 7, 8, 5, 3, 1, 6, 4, 2}
+    };
+    SudoKu::set_blank(21, matrix);
+    int blank_num = 0;
+    for (int i = 0; i < matrix.size(); i++) {
+        for (int j = 0; j < matrix[0].size(); j++) {
+            if (matrix[i][j] == 0) {
+                blank_num++;
             }
         }
+    }
     EXPECT_EQ(21, blank_num);
+}
+
+TEST(create_random_sudoku,unique){   /* NOLINT */
+    // 测试SudoKu::create_random_sudoku
+    // 测试难度，唯一解
+    SudoKu test;
+    redundant_m = true;
+    game_level = 2;
+    redundant_r = false;
+    low_range = 25;
+    high_range = 50;
+    test.create_random_sudoku(1, true);
+    vector<vector<int>> matrix(9, vector<int>(9, 0));
+
+    ifstream in;
+    in.open("games.txt", ios::in);
+    string line;
+    int row = 0;
+
+    while (getline(in, line))
+    {
+        if (line.empty()) {
+            break;
         }
-
-TEST(create_random_sudoku,unique){
-        // 测试SudoKu::create_random_sudoku
-        // 测试难度，唯一解
-        SudoKu test;
-        redundant_m = true;
-        game_level = 2;
-        redundant_r = false;
-        low_range = 25;
-        high_range = 50;
-        test.create_random_sudoku(1, true);
-        vector<vector<int>> matrix(9, vector<int>(9, 0));
-
-        ifstream in;
-        in.open("games.txt", ios::in);
-        string line;
-        int row = 0;
-
-        while (getline(in, line))
-        {
-            if (line.empty()) {
-                break;
-            }
-            if (row == 9) {
-                row = 0;
-            }
-            else {
-                for (int j = 0; j < 9; j++) {
-                    int num = (char)line[2 * (long long)j] - '0';
-                    matrix[row][j] = num;
-                }
-                row++;
-            }
+        if (row == 9) {
+            row = 0;
         }
-        in.close();
-        int count = 0;
-        for (int i = 0; i < matrix.size(); i++) {
-            for (int j = 0; j < matrix[i].size(); j++) {
-                if (matrix[i][j] == 0) {
-                    count++;
-                }
-            }
-        }
-        cout << count << endl;
-            EXPECT_EQ((count == 30), true);
-        int temp = 0;
-            EXPECT_EQ(test.solve_with_count(matrix, temp), 1);
-
-
-        // 测试范围，唯一解
-        redundant_m = false;
-        redundant_r = true;
-        for (int i = 0; i < 9; i++) {
+        else {
             for (int j = 0; j < 9; j++) {
-                matrix[i][j] = 0;
+                int num = (char)line[2 * (long long)j] - '0';
+                matrix[row][j] = num;
+            }
+            row++;
+        }
+    }
+    in.close();
+    int count = 0;
+    for (auto & i : matrix) {
+        for (int j : i) {
+            if (j == 0) {
+                count++;
             }
         }
+    }
+    cout << count << endl;
+        EXPECT_EQ((count == 30), true);
+    int temp = 0;
+        EXPECT_EQ(test.solve_with_count(matrix, temp), 1);
 
-        in.open("games.txt", ios::in);
-        row = 0;
 
-        while (getline(in, line))
-        {
-            if (line.empty()) {
-                break;
-            }
-            if (row == 9) {
-                row = 0;
-            }
-            else {
-                for (int j = 0; j < 9; j++) {
-                    int num = (char)line[2 * (long long)j] - '0';
-                    matrix[row][j] = num;
-                }
-                row++;
-            }
+    // 测试范围，唯一解
+    redundant_m = false;
+    redundant_r = true;
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            matrix[i][j] = 0;
         }
-        in.close();
-        count = 0;
-        for (int i = 0; i < matrix.size(); i++) {
-            for (int j = 0; j < matrix[i].size(); j++) {
-                if (matrix[i][j] == 0) {
-                    count++;
-                }
-            }
-        }
-        cout << count << endl;
-            EXPECT_EQ((count>=25 && count <=50), true);
-        temp = 0;
-            EXPECT_EQ(test.solve_with_count(matrix, temp), 1);
-        }
+    }
 
-TEST(create_random_sudoku,not_unique){
+    in.open("games.txt", ios::in);
+    row = 0;
+
+    while (getline(in, line))
+    {
+        if (line.empty()) {
+            break;
+        }
+        if (row == 9) {
+            row = 0;
+        }
+        else {
+            for (int j = 0; j < 9; j++) {
+                int num = (char)line[2 * (long long)j] - '0';
+                matrix[row][j] = num;
+            }
+            row++;
+        }
+    }
+    in.close();
+    count = 0;
+    for (auto & i : matrix) {
+        for (int j : i) {
+            if (j == 0) {
+                count++;
+            }
+        }
+    }
+    cout << count << endl;
+    EXPECT_EQ((count>=25 && count <=50), true);
+    temp = 0;
+    EXPECT_EQ(test.solve_with_count(matrix, temp), 1);
+}
+
+TEST(create_random_sudoku,not_unique){   /* NOLINT */
     SudoKu test;
     redundant_m = true;
     game_level = 2;
@@ -267,40 +278,36 @@ TEST(create_random_sudoku,not_unique){
     }
     in.close();
     int count = 0;
-    for (int i = 0; i < matrix.size(); i++) {
-        for (int j = 0; j < matrix[i].size(); j++) {
-            if (matrix[i][j] == 0) {
+    for (auto & i : matrix) {
+        for (int j : i) {
+            if (j == 0) {
                 count++;
             }
         }
     }
     cout << count << endl;
     EXPECT_EQ((count == 30), true);
-
-
 }
 
 
-TEST(SudoKu ,null){
+TEST(SudoKu ,null){  /* NOLINT */
     //构造函数
     vector<vector<int>> matrix(9, vector<int>(9, 0));
     SudoKu test(matrix);
-
 }
 
 
-TEST(create_sudoku_endgame ,null){
+TEST(create_sudoku_endgame ,null){   /* NOLINT */
     //创建终局
     vector<vector<int>> matrix(9, vector<int>(9, 0));
     // 初始化矩阵
     SudoKu endgame(matrix);
 
     endgame.create_sudoku_endgame(3, matrix);
-
 }
 
-TEST(read_file ,null){
-    //读文件
+TEST(read_file ,null){   /* NOLINT */
+    // 读文件
     vector<vector<int>> matrix(9, vector<int>(9, 0));
     SudoKu slove_game;
 
@@ -308,8 +315,6 @@ TEST(read_file ,null){
     in.open("games.txt", ios::in);
     cout << sudoku_slove_path << endl;
     slove_game.read_file(in, matrix);
-
-
 }
 
 

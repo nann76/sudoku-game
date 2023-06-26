@@ -1,4 +1,4 @@
-#ifndef COMMOM_H
+#ifndef COMMON_H
 #define COMMON_H
 #include"sudoku.h"
 

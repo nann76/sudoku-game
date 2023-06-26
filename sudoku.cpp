@@ -10,7 +10,7 @@ SudoKu::SudoKu(vector<vector<int>>& matrix){
 
 bool SudoKu::is_valid(int row, int col, int num, vector<vector<int>>& matrix){
     for (int i = 0; i < matrix[0].size(); i++) if (num == matrix[row][i]) return false;
-    for (int i = 0; i < matrix.size(); i++)    if (num == matrix[i][col]) return false;
+    for (auto & i : matrix)    if (num == i[col]) return false;
     for (int i = row / 3 * 3; i < row / 3 * 3 + 3; i++) {
         for (int j = col / 3 * 3; j < col / 3 * 3 + 3; j++) {
             if (num == matrix[i][j]) return false;
@@ -89,7 +89,7 @@ void SudoKu::swap_col(int m, int n, vector<vector<int>>& matrix){
 
 
 void SudoKu::set_blank(int nums, vector<vector<int>>& matrix){
-    srand((unsigned int)time(NULL));
+    srand((unsigned int)time(nullptr));
     while (nums){
         int row = rand() % 9;
         int col = rand() % 9;
@@ -138,14 +138,14 @@ void SudoKu::create_random_sudoku(int num_game,bool if_unique) {
     this->active = this->init(matrix, 0);
 
     int choice[9][2] = { {0,1},{0,2},{1,2},{3,4},{3,5},{4,5},{6,7},{6,8},{7,8} };
-    srand((unsigned int)time(NULL));
+    srand((unsigned int)time(nullptr));
 
     string file_name = game_dir ;
     ofstream wfile;
     wfile.open(file_name, ios::out);
 
     for (int i = 0; i < num_game; i++) {
-        for (int i = 0; i < CHANGE_MAX_NUM; i++) {
+        for (int j = 0; j < CHANGE_MAX_NUM; j++) {
             int index = rand() % 9;
             matrix[choice[index][0]].swap(matrix[choice[index][1]]);
             swap_col(choice[index][0], choice[index][1], matrix);
@@ -170,9 +170,9 @@ void SudoKu::create_random_sudoku(int num_game,bool if_unique) {
                 write_file(wfile, temp);
             }
 
-            int i = 0;
+            int ii = 0;
             while (ans >= 2) {
-                for (int i = 0; i < CHANGE_MAX_NUM; i++) {
+                for (int j = 0; j < CHANGE_MAX_NUM; j++) {
                     int index = rand() % 9;
                     matrix[choice[index][0]].swap(matrix[choice[index][1]]);
                     swap_col(choice[index][0], choice[index][1], matrix);
@@ -182,7 +182,7 @@ void SudoKu::create_random_sudoku(int num_game,bool if_unique) {
                 set_blank(num_blank, temp2);
 
                 a = 0;
-                i++;
+                ii++;
                 ans = solve_with_count(temp2, a);
                 not_unique = false;
 
@@ -210,15 +210,8 @@ void SudoKu::create_random_sudoku(int num_game,bool if_unique) {
 void SudoKu::create_sudoku_endgame(int num_game, vector<vector<int>>& matrix) {
 
     int choice[9][2] = { {0,1},{0,2},{1,2},{3,4},{3,5},{4,5},{6,7},{6,8},{7,8} };
-    srand((unsigned int)time(NULL));
+    srand((unsigned int)time(nullptr));
 
-    /*
-    if (_access(endgame_dir.c_str(), 0) == -1)	// 如果文件夹不存在
-    {
-        int ret = _mkdir(endgame_dir.c_str());// 则创建
-        if (ret == -1) cout << "mkdir failed!" << endl;
-    }
-    */
     string file_name = endgame_dir;
     ofstream wfile;
     wfile.open(file_name, ios::out);
@@ -239,10 +232,6 @@ void SudoKu::create_sudoku_endgame(int num_game, vector<vector<int>>& matrix) {
             cout << endl;
         }
         cout << "-----------------" << endl;
-
-
-
-
         write_file(wfile, matrix);
     }
     wfile.close();
@@ -259,8 +248,6 @@ void SudoKu::read_file(ifstream& file, vector<vector<int>>& matrix) {
 
     while (getline(file, line))
     {
-
-
         if (line.empty()) {
             break;
         }
@@ -292,9 +279,6 @@ void SudoKu::read_file(ifstream& file, vector<vector<int>>& matrix) {
             row++;
 
         }
-
-
-
     }
     cout << "结果输出到result.txt" << endl;
     wfile.close();
@@ -309,7 +293,5 @@ void SudoKu::write_file(ofstream& file, vector<vector<int>> matrix) {
         }
         file << std::endl;
     }
-
     file << "-----------------" << endl;
-
 }
