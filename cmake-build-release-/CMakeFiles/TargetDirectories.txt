@@ -1,0 +1,7 @@
+D:/workspace/CLionProjects/sudoku/cmake-build-release-/CMakeFiles/sudoku.dir
+D:/workspace/CLionProjects/sudoku/cmake-build-release-/CMakeFiles/edit_cache.dir
+D:/workspace/CLionProjects/sudoku/cmake-build-release-/CMakeFiles/rebuild_cache.dir
+D:/workspace/CLionProjects/sudoku/cmake-build-release-/googletest/CMakeFiles/gtest.dir
+D:/workspace/CLionProjects/sudoku/cmake-build-release-/googletest/CMakeFiles/gtest_main.dir
+D:/workspace/CLionProjects/sudoku/cmake-build-release-/googletest/CMakeFiles/edit_cache.dir
+D:/workspace/CLionProjects/sudoku/cmake-build-release-/googletest/CMakeFiles/rebuild_cache.dir

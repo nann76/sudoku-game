@@ -2,7 +2,7 @@
 // 调用自己添加的getopt，以在windows下使用getopt
 #include"getopt.h"
 #include"assert.h"
-#include"common.h"
+
 #pragma warning(disable:4996)
 using namespace std;
 
@@ -11,6 +11,8 @@ using namespace std;
 #define TEST
 
 #ifndef TEST
+#include"common.h"
+
 int main(int argc, char* argv[]) {
     // 参数，只有-u后无参数
     char getopt_arg[] = "c:s:n:m:r:u";

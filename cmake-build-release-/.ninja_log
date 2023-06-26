@@ -1,0 +1,21 @@
+# ninja log v5
+1	2746	7094862128061121	CMakeFiles/sudoku.dir/main.cpp.obj	d65ab2c859dd612e
+14	2774	7094862128338605	CMakeFiles/sudoku.dir/sudoku.cpp.obj	135799298ea0ffca
+26	3051	7094862131100249	CMakeFiles/sudoku.dir/unittests.cpp.obj	1ebe5a1f31b4b6ee
+43	17620	7094862276733465	googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.obj	297c4d7f1896d752
+17623	17793	7094862278516538	lib/libgtest.a	da096637d8334283
+17794	18506	7094862285530477	sudoku.exe	70c7362e33cd8d05
+6	1864	7094863291015150	CMakeFiles/sudoku.dir/unittests.cpp.obj	1ebe5a1f31b4b6ee
+7	2260	7094863633311532	CMakeFiles/sudoku.dir/unittests.cpp.obj	1ebe5a1f31b4b6ee
+7	1910	7094864233448148	CMakeFiles/sudoku.dir/unittests.cpp.obj	1ebe5a1f31b4b6ee
+6	1776	7094864681532242	CMakeFiles/sudoku.dir/unittests.cpp.obj	1ebe5a1f31b4b6ee
+1784	2371	7094864687391920	sudoku.exe	70c7362e33cd8d05
+10	4008	7094866765881827	CMakeFiles/sudoku.dir/unittests.cpp.obj	1ebe5a1f31b4b6ee
+4009	4861	7094866774214647	sudoku.exe	70c7362e33cd8d05
+7	2982	7094869029852060	CMakeFiles/sudoku.dir/unittests.cpp.obj	1ebe5a1f31b4b6ee
+2982	3713	7094869037021505	sudoku.exe	70c7362e33cd8d05
+7	7284	7094870572730169	CMakeFiles/sudoku.dir/unittests.cpp.obj	1ebe5a1f31b4b6ee
+7285	8381	7094870583495114	sudoku.exe	70c7362e33cd8d05
+30	6060	7094871601051277	CMakeFiles/sudoku.dir/main.cpp.obj	d65ab2c859dd612e
+7	3940	7094872176721238	CMakeFiles/sudoku.dir/unittests.cpp.obj	1ebe5a1f31b4b6ee
+3940	4725	7094872184461012	sudoku.exe	70c7362e33cd8d05
