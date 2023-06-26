@@ -7,6 +7,7 @@
 #include <string>
 #include <io.h>
 #include <direct.h>
+#include <random>
 
 
 using namespace std;
@@ -33,7 +34,7 @@ public:
     // 创建指定数量和挖空数量的数独，以及是否唯一解
     void create_random_sudoku(int num_game, bool if_unique);
     // 创建终局 
-    void create_sudoku_endgame(int num_game, vector<vector<int>>& matrix);
+    void create_sudoku_endgame(int num_game, vector<vector<int>>& matrix) const;
     // 读文件
     void read_file(ifstream& file, vector<vector<int>>& matrix);
     // 写文件

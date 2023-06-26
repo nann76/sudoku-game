@@ -89,10 +89,13 @@ void SudoKu::swap_col(int m, int n, vector<vector<int>>& matrix){
 
 
 void SudoKu::set_blank(int nums, vector<vector<int>>& matrix){
-    srand((unsigned int)time(nullptr));
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> row_dis(0, 8);
+    std::uniform_int_distribution<> col_dis(0, 8);
     while (nums){
-        int row = rand() % 9;
-        int col = rand() % 9;
+        int row = row_dis(gen);
+        int col = col_dis(gen);
         if (matrix[row][col] != 0){
             matrix[row][col] = 0;
             nums--;
@@ -138,7 +141,11 @@ void SudoKu::create_random_sudoku(int num_game,bool if_unique) {
     this->active = this->init(matrix, 0);
 
     int choice[9][2] = { {0,1},{0,2},{1,2},{3,4},{3,5},{4,5},{6,7},{6,8},{7,8} };
-    srand((unsigned int)time(nullptr));
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> index_dis1(0, 8);
+    std::uniform_int_distribution<> index_dis2(0, 8);
+    std::uniform_int_distribution<> num_blank_dis(0, (high_range - low_range + 1) + low_range-1);
 
     string file_name = game_dir ;
     ofstream wfile;
@@ -146,14 +153,14 @@ void SudoKu::create_random_sudoku(int num_game,bool if_unique) {
 
     for (int i = 0; i < num_game; i++) {
         for (int j = 0; j < CHANGE_MAX_NUM; j++) {
-            int index = rand() % 9;
+            int index = index_dis1(gen);
             matrix[choice[index][0]].swap(matrix[choice[index][1]]);
             swap_col(choice[index][0], choice[index][1], matrix);
         }
 
         // 根据给定范围设置挖空数
         if (redundant_r) {
-            num_blank = rand() % (high_range - low_range + 1) + low_range;
+            num_blank = num_blank_dis(gen);
         }
 
         if (if_unique) {
@@ -173,7 +180,7 @@ void SudoKu::create_random_sudoku(int num_game,bool if_unique) {
             int ii = 0;
             while (ans >= 2) {
                 for (int j = 0; j < CHANGE_MAX_NUM; j++) {
-                    int index = rand() % 9;
+                    int index = index_dis2(gen);
                     matrix[choice[index][0]].swap(matrix[choice[index][1]]);
                     swap_col(choice[index][0], choice[index][1], matrix);
                 }
@@ -207,10 +214,12 @@ void SudoKu::create_random_sudoku(int num_game,bool if_unique) {
 
 
 // 创建终局 
-void SudoKu::create_sudoku_endgame(int num_game, vector<vector<int>>& matrix) {
+void SudoKu::create_sudoku_endgame(int num_game, vector<vector<int>>& matrix) const {
 
     int choice[9][2] = { {0,1},{0,2},{1,2},{3,4},{3,5},{4,5},{6,7},{6,8},{7,8} };
-    srand((unsigned int)time(nullptr));
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> index_dis(0, 8);
 
     string file_name = endgame_dir;
     ofstream wfile;
@@ -219,7 +228,7 @@ void SudoKu::create_sudoku_endgame(int num_game, vector<vector<int>>& matrix) {
     for (int num = 0; num < num_game; num++) {
         // 调整矩阵
         for (int i = 0; i < CHANGE_MAX_NUM; i++) {
-            int index = rand() % 9;
+            int index = index_dis(gen);
             matrix[choice[index][0]].swap(matrix[choice[index][1]]);
             swap_col(choice[index][0], choice[index][1], matrix);
         }
@@ -256,7 +265,7 @@ void SudoKu::read_file(ifstream& file, vector<vector<int>>& matrix) {
             row = 0;
 
             cout << "求解结果：" << endl;
-            bool activate = init(matrix, 0);
+            init(matrix, 0);
 
             write_file(wfile, matrix);
 
