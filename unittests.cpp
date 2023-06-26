@@ -143,13 +143,12 @@ TEST(set_blank,null){
     EXPECT_EQ(21, blank_num);
         }
 
-TEST(create_random_sudoku,null)
-        {
-                // 测试SudoKu::create_random_sudoku
-                // 测试难度，唯一解
-                SudoKu test;
+TEST(create_random_sudoku,unique){
+        // 测试SudoKu::create_random_sudoku
+        // 测试难度，唯一解
+        SudoKu test;
         redundant_m = true;
-        game_level = 1;
+        game_level = 2;
         redundant_r = false;
         low_range = 25;
         high_range = 50;
@@ -187,7 +186,7 @@ TEST(create_random_sudoku,null)
             }
         }
         cout << count << endl;
-            EXPECT_EQ((count == 25), true);
+            EXPECT_EQ((count == 30), true);
         int temp = 0;
             EXPECT_EQ(test.solve_with_count(matrix, temp), 1);
 
@@ -235,4 +234,82 @@ TEST(create_random_sudoku,null)
             EXPECT_EQ(test.solve_with_count(matrix, temp), 1);
         }
 
-Test
+TEST(create_random_sudoku,not_unique){
+    SudoKu test;
+    redundant_m = true;
+    game_level = 2;
+    redundant_r = false;
+    low_range = 25;
+    high_range = 50;
+    test.create_random_sudoku(1, false);
+    vector<vector<int>> matrix(9, vector<int>(9, 0));
+
+    ifstream in;
+    in.open("games.txt", ios::in);
+    string line;
+    int row = 0;
+
+    while (getline(in, line))
+    {
+        if (line.empty()) {
+            break;
+        }
+        if (row == 9) {
+            row = 0;
+        }
+        else {
+            for (int j = 0; j < 9; j++) {
+                int num = (char)line[2 * (long long)j] - '0';
+                matrix[row][j] = num;
+            }
+            row++;
+        }
+    }
+    in.close();
+    int count = 0;
+    for (int i = 0; i < matrix.size(); i++) {
+        for (int j = 0; j < matrix[i].size(); j++) {
+            if (matrix[i][j] == 0) {
+                count++;
+            }
+        }
+    }
+    cout << count << endl;
+    EXPECT_EQ((count == 30), true);
+
+
+}
+
+
+TEST(SudoKu ,null){
+    //构造函数
+    vector<vector<int>> matrix(9, vector<int>(9, 0));
+    SudoKu test(matrix);
+
+}
+
+
+TEST(create_sudoku_endgame ,null){
+    //创建终局
+    vector<vector<int>> matrix(9, vector<int>(9, 0));
+    // 初始化矩阵
+    SudoKu endgame(matrix);
+
+    endgame.create_sudoku_endgame(3, matrix);
+
+}
+
+TEST(read_file ,null){
+    //读文件
+    vector<vector<int>> matrix(9, vector<int>(9, 0));
+    SudoKu slove_game;
+
+    ifstream in;
+    in.open("games.txt", ios::in);
+    cout << sudoku_slove_path << endl;
+    slove_game.read_file(in, matrix);
+
+
+}
+
+
