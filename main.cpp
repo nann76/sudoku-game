@@ -1,14 +1,16 @@
+// Copyright (c) 2023 dingyanfeng/jianghaonan
+// All rights reserved.
+
 // 调用自己添加的getopt，以在windows下使用getopt
-#include "getopt.h"
+#include "getopt.h"         // NOLINT
 #include "gtest/gtest.h"
 
-#define TEST_SUDOKU
+// #define TEST_SUDOKU
 
 #ifndef TEST_SUDOKU
-#include"common.h"
-#include"my_assert.h"
 #include<iostream>
-using namespace std;
+#include"common.h"          // NOLINT
+#include"my_assert.h"       // NOLINT
 
 int main(int argc, char* argv[]) {
     // 参数，只有-u后无参数
@@ -17,57 +19,70 @@ int main(int argc, char* argv[]) {
 
     while ((opt = getopt(argc, argv, getopt_arg)) != -1) {
         char* endptr = nullptr;
-        switch (opt){
+        switch (opt) {
             case 'c':
                 my_assert(!if_gen_sudoku_endgame, "redundant optarg  -c");
                 if_gen_sudoku_endgame = true;
                 // 取终局的数量
-                num_sudoku_endgame = (int)strtol(optarg, &endptr, 10);
+                num_sudoku_endgame = static_cast<int>(strtol(
+                                                    optarg,
+                                                    &endptr,
+                                                    10));
                 my_assert(num_sudoku_endgame != 0, "optarg  -c not a num ");
-                my_assert(1 <= num_sudoku_endgame && num_sudoku_endgame <= 1000000, "终局的数量不在范围内");
+                my_assert(1 <= num_sudoku_endgame &&
+                                    num_sudoku_endgame <= 1000000,
+                          "终局的数量不在范围内");
                 break;
             case 's':
                 my_assert(!redundant_s, "redundant optarg  -s");
                 redundant_s = true;
                 // 取求解路径
-                strcpy(sudoku_solve_path, optarg);
+                snprintf(sudoku_solve_path, sizeof(sudoku_solve_path),
+                         "%s", optarg);
                 break;
             case 'n':
                 my_assert(!redundant_n, "redundant optarg  -n");
                 redundant_n = true;
 
                 // 取需要的游戏数量
-                num_sudoku_game = (int)strtol(optarg, &endptr, 10);
+                num_sudoku_game = static_cast<int>(strtol(optarg, &endptr, 10));
                 my_assert(num_sudoku_game != 0, "optarg  -n not a num ");
-                my_assert(1 <= num_sudoku_game && num_sudoku_game <= 1000, "需要的游戏数量不在范围内");
+                my_assert(1 <= num_sudoku_game && num_sudoku_game <= 1000,
+                          "需要的游戏数量不在范围内");
                 break;
             case 'm':
                 my_assert(!redundant_m, "redundant optarg  -m");
                 redundant_m = true;
 
                 // 取需要的游戏数量
-                game_level = (int)strtol(optarg, &endptr, 10);
-                my_assert(game_level != 0, "optarg  -m not a num ");
-                my_assert(1 <= game_level && game_level <= 3, "游戏难度不在范围内");
+                game_level = static_cast<int>(strtol(optarg, &endptr, 10));
+                my_assert(game_level != 0,
+                          "optarg  -m not a num ");
+                my_assert(1 <= game_level && game_level <= 3,
+                          "游戏难度不在范围内");
                 break;
             case 'r':
                 my_assert(!redundant_r, "redundant optarg  -r");
                 redundant_r = true;
 
                 char temp[20];
-                strcpy(temp, optarg);
+                snprintf(temp, sizeof(temp), "%s", optarg);
                 char* low;
                 char* up;
 
-                low = strtok(temp, "~");
-                low_range = (int)strtol(low, &endptr, 10);
-                up = strtok(nullptr, "~");
-                high_range = (int)strtol(up, &endptr, 10);
+                char *my_saveptr1;
+                low = strtok_r(temp, "~", &my_saveptr1);
+                low_range = static_cast<int>(strtol(low, &endptr, 10));
+                char *my_saveptr2;
+                up = strtok_r(nullptr, "~", &my_saveptr2);
+                high_range = static_cast<int>(strtol(up, &endptr, 10));
                 my_assert(low_range != 0, "optarg  -u  low range not a num ");
                 my_assert(high_range != 0, "optarg  -u  high range not a num ");
 
-                my_assert(20 <= low_range && low_range <= 55, "挖空的范围low_range 不在过规定范围内");
-                my_assert(20 <= high_range && high_range <= 55, "挖空的范围high_range 不在过规定范围内");
+                my_assert(20 <= low_range && low_range <= 55,
+                          "挖空的范围low_range 不在过规定范围内");
+                my_assert(20 <= high_range && high_range <= 55,
+                          "挖空的范围high_range 不在过规定范围内");
                 if (high_range < low_range) {
                     my_assert(false, "挖空的范围low range 小于high_range ");
                 }
@@ -78,10 +93,9 @@ int main(int argc, char* argv[]) {
                 break;
             default:
                 // 无效opt
-                cout << "exit invalid opt:" << endl;
+                std::cout << "exit invalid opt:" << std::endl;
                 break;
         }
-
     }
 
     // 判断参数同时出现
@@ -112,10 +126,9 @@ int main(int argc, char* argv[]) {
         SudoKu solve_game;
 
         ifstream in;
-        in.open(sudoku_solve_path, ios::in);
-        cout << sudoku_solve_path << endl;
+        in.open(sudoku_solve_path, std::ios::in);
+        std::cout << sudoku_solve_path << std::endl;
         solve_game.read_file(in, matrix);
-
     }
 
     // 调用生成终局

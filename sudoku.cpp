@@ -1,15 +1,17 @@
-#include"sudoku.h"
+// Copyright (c) 2023 dingyanfeng/jianghaonan
+// All rights reserved.
+#include"sudoku.h"  // NOLINT
 
-using namespace std;
 
-
-SudoKu::SudoKu(vector<vector<int>>& matrix){
+SudoKu::SudoKu(vector<vector<int>>& matrix) {
     this->active = init(matrix, 0);
 }
 
 
-bool SudoKu::is_valid(int row, int col, int num, vector<vector<int>>& matrix){
-    for (int i = 0; i < matrix[0].size(); i++) if (num == matrix[row][i]) return false;
+bool SudoKu::is_valid(int row, int col, int num, vector<vector<int>>& matrix) {
+    for (int i = 0; i < matrix[0].size(); i++)
+        if (num == matrix[row][i])
+            return false;
     for (auto & i : matrix)    if (num == i[col]) return false;
     for (int i = row / 3 * 3; i < row / 3 * 3 + 3; i++) {
         for (int j = col / 3 * 3; j < col / 3 * 3 + 3; j++) {
@@ -43,8 +45,7 @@ bool SudoKu::init(vector<vector<int>>& matrix, int start){ /* NOLINT */
 }
 
 
-bool get_RC(int& row, int& col, vector<vector<int>>& matrix)
-{
+bool get_RC(int& row, int& col, vector<vector<int>>& matrix) {
     for (row = 0; row < 9; row++)
         for (col = 0; col < 9; col++)
             if (matrix[row][col] == 0)
@@ -53,34 +54,35 @@ bool get_RC(int& row, int& col, vector<vector<int>>& matrix)
 }
 
 
-// 本函数可以获得全部的解的数量，但当有2个时则返回
+// This function can get the number of all solutions,
+// but return when there are 2
 bool not_unique = false;
 int SudoKu::solve_with_count(vector<vector<int>>& matrix,int  &ans) {   /* NOLINT */
     int i, j;
-    if (get_RC(i, j, matrix)){
-        for (int num = 1; num <= 9; num++){
+    if (get_RC(i, j, matrix)) {
+        for (int num = 1; num <= 9; num++) {
             if (not_unique) {
                 return ans;
             }
-            if (is_valid(i, j, num, matrix)){
+            if (is_valid(i, j, num, matrix)) {
                 matrix[i][j] = num;
-                ans = solve_with_count(matrix,ans);
+                ans = solve_with_count(matrix, ans);
                 matrix[i][j] = 0;
             }
         }
     }
     else {
         ans++;
-        if(ans==2) not_unique = true;
+        if (ans == 2) not_unique = true;
     }
 
     return ans;
 }
 
 
-void SudoKu::swap_col(int m, int n, vector<vector<int>>& matrix){
+void SudoKu::swap_col(int m, int n, vector<vector<int>>& matrix) {
     vector<int> temp(matrix.size(), 0);
-    for (int i = 0; i < matrix.size(); i++){
+    for (int i = 0; i < matrix.size(); i++) {
         temp[i] = matrix[i][m];
         matrix[i][m] = matrix[i][n];
         matrix[i][n] = temp[i];
@@ -88,15 +90,15 @@ void SudoKu::swap_col(int m, int n, vector<vector<int>>& matrix){
 }
 
 
-void SudoKu::set_blank(int nums, vector<vector<int>>& matrix){
+void SudoKu::set_blank(int nums, vector<vector<int>>& matrix) {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> row_dis(0, 8);
     std::uniform_int_distribution<> col_dis(0, 8);
-    while (nums){
+    while (nums) {
         int row = row_dis(gen);
         int col = col_dis(gen);
-        if (matrix[row][col] != 0){
+        if (matrix[row][col] != 0) {
             matrix[row][col] = 0;
             nums--;
         }
@@ -104,8 +106,8 @@ void SudoKu::set_blank(int nums, vector<vector<int>>& matrix){
 }
 
 
-void SudoKu::create_random_sudoku(int num_game,bool if_unique) {
-    // 挖空数
+void SudoKu::create_random_sudoku(int num_game, bool if_unique) {
+    // the num of the blank
     int num_blank = 20;
 
     extern bool redundant_m;
@@ -115,9 +117,9 @@ void SudoKu::create_random_sudoku(int num_game,bool if_unique) {
     extern int low_range;
     extern int high_range;
 
-    // 根据游戏难度修改挖空数
+    // Modify the number of blank according to the difficulty of the game
     if (redundant_m) {
-        switch (game_level){
+        switch (game_level) {
             case GAME_LEVEL::NONE:
                 num_blank = 20;
                 break;
@@ -136,20 +138,23 @@ void SudoKu::create_random_sudoku(int num_game,bool if_unique) {
         }
     }
 
-    // 新建矩阵
+    // new matrix
     vector<vector<int>> matrix(9, vector<int>(9, 0));
     this->active = this->init(matrix, 0);
 
-    int choice[9][2] = { {0,1},{0,2},{1,2},{3,4},{3,5},{4,5},{6,7},{6,8},{7,8} };
+    int choice[9][2] = { {0, 1}, {0, 2}, {1, 2},
+                         {3, 4}, {3, 5}, {4, 5},
+                         {6, 7}, {6, 8}, {7, 8} };
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> index_dis1(0, 8);
     std::uniform_int_distribution<> index_dis2(0, 8);
-    std::uniform_int_distribution<> num_blank_dis(0, (high_range - low_range + 1) + low_range-1);
+    std::uniform_int_distribution<> num_blank_dis(0,
+                                    (high_range-low_range+1)+low_range-1);
 
-    string file_name = game_dir ;
+    string file_name = game_dir;
     ofstream wfile;
-    wfile.open(file_name, ios::out);
+    wfile.open(file_name, std::ios::out);
 
     for (int i = 0; i < num_game; i++) {
         for (int j = 0; j < CHANGE_MAX_NUM; j++) {
@@ -158,19 +163,19 @@ void SudoKu::create_random_sudoku(int num_game,bool if_unique) {
             swap_col(choice[index][0], choice[index][1], matrix);
         }
 
-        // 根据给定范围设置挖空数
+        // Set the number of blank according to the given range
         if (redundant_r) {
             num_blank = num_blank_dis(gen);
         }
 
         if (if_unique) {
-            // 深拷贝初始
+            // deep copy initial
             vector<vector<int>> temp(matrix);
-            // 挖空
+            // get some blank
             set_blank(num_blank, temp);
             int a = 0;
 
-            int ans=solve_with_count(temp,a);
+            int ans = solve_with_count(temp, a);
             not_unique = false;
 
             if (ans < 2) {
@@ -200,47 +205,48 @@ void SudoKu::create_random_sudoku(int num_game,bool if_unique) {
         }
 
         else {
-            // 深拷贝初始
+            // deep copy initial
             vector<vector<int>> temp(matrix);
-            // 挖空
+            // get some blank
             set_blank(num_blank, temp);
 
             write_file(wfile, temp);
         }
     }
     wfile.close();
-
 }
 
 
-// 创建终局 
+// create endgame
 void SudoKu::create_sudoku_endgame(int num_game, vector<vector<int>>& matrix) const {
-
-    int choice[9][2] = { {0,1},{0,2},{1,2},{3,4},{3,5},{4,5},{6,7},{6,8},{7,8} };
+    int choice[9][2] = {
+              {0, 1}, {0, 2}, {1, 2},
+              {3, 4}, {3, 5}, {4, 5},
+              {6, 7}, {6, 8}, {7, 8} };
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> index_dis(0, 8);
 
     string file_name = endgame_dir;
     ofstream wfile;
-    wfile.open(file_name, ios::out);
+    wfile.open(file_name, std::ios::out);
 
     for (int num = 0; num < num_game; num++) {
-        // 调整矩阵
+        // adjustment matrix
         for (int i = 0; i < CHANGE_MAX_NUM; i++) {
             int index = index_dis(gen);
             matrix[choice[index][0]].swap(matrix[choice[index][1]]);
             swap_col(choice[index][0], choice[index][1], matrix);
         }
-        // 无需挖空
-        // 输出打印
+        // needn't blank
+        // print
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                cout << matrix[i][j] << " ";
+                std::cout << matrix[i][j] << " ";
             }
-            cout << endl;
+            std::cout << std::endl;
         }
-        cout << "-----------------" << endl;
+        std::cout << "-----------------" << std::endl;
         write_file(wfile, matrix);
     }
     wfile.close();
@@ -248,48 +254,44 @@ void SudoKu::create_sudoku_endgame(int num_game, vector<vector<int>>& matrix) co
 
 
 void SudoKu::read_file(ifstream& file, vector<vector<int>>& matrix) {
-
     string line;
     int row = 0;
 
     ofstream wfile;
-    wfile.open("result.txt", ios::out);
+    wfile.open("result.txt", std::ios::out);
 
-    while (getline(file, line))
-    {
+    while (getline(file, line)) {
         if (line.empty()) {
             break;
         }
 
-        if (row==9) {
+        if (row == 9) {
             row = 0;
 
-            cout << "求解结果：" << endl;
+            std::cout << "Solution result:" << std::endl;
             init(matrix, 0);
 
             write_file(wfile, matrix);
 
             for (int i = 0; i < 9; i++) {
                 for (int j = 0; j < 9; j++) {
-                    cout << matrix[i][j] << " ";
+                    std::cout << matrix[i][j] << " ";
                     matrix[i][j] = 0;
 
                 }
-                cout << endl;
+                std::cout << std::endl;
             }
-            cout << "-----------------" << endl;
-
-        }
-        else {
+            std::cout << "-----------------" << std::endl;
+        } else {
             for (int j = 0; j < 9; j++) {
-                int num = (char)line[2 * (long long)j] - '0';
+                int num = static_cast<unsigned char>(
+                        line[2 * (long long)j] - '0');
                 matrix[row][j] = num;
             }
             row++;
-
         }
     }
-    cout << "结果输出到result.txt" << endl;
+    std::cout << "Output the result to result.txt" << std::endl;
     wfile.close();
     file.close();
 }
@@ -302,5 +304,5 @@ void SudoKu::write_file(ofstream& file, vector<vector<int>> matrix) {
         }
         file << std::endl;
     }
-    file << "-----------------" << endl;
+    file << "-----------------" << std::endl;
 }

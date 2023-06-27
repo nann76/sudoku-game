@@ -1,3 +1,6 @@
+// Copyright (c) 2023 dingyanfeng/jianghaonan
+// All rights reserved.
+// NOLINTNEXTLINE(runtime/references)
 # include "gtest/gtest.h"
 # include "sudoku.h"
 #define ADD_COMMON
@@ -27,6 +30,7 @@ extern bool redundant_u;
 extern bool if_unique;
 #endif
 
+using std::ios;
 
 TEST(swap_col, null) {  /* NOLINT */
     vector<vector<int>> matrix1 = {
@@ -62,7 +66,7 @@ TEST(swap_col, null) {  /* NOLINT */
 
 TEST(solve_with_count, null) {  /* NOLINT */
 
-    // ≤‚ ‘∫Ø ˝SudoKu::solve_with_count
+    // test SudoKu::solve_with_count
     SudoKu test1;
     vector<vector<int>> matrix1 = {
             {9, 8, 7, 0, 1, 2, 0, 4, 6},
@@ -77,7 +81,8 @@ TEST(solve_with_count, null) {  /* NOLINT */
     };
 
     int num1 = 0;
-    EXPECT_TRUE(test1.solve_with_count(matrix1, num1) == 1 || test1.solve_with_count(matrix1, num1) == 2);
+    EXPECT_TRUE(test1.solve_with_count(matrix1, num1) == 1
+            || test1.solve_with_count(matrix1, num1) == 2);
     EXPECT_TRUE(num1 == 1 || num1 == 2);
 
     SudoKu test2;
@@ -100,7 +105,7 @@ TEST(solve_with_count, null) {  /* NOLINT */
 
 
 TEST(init, null) {   /* NOLINT */
-    // ≤‚ ‘SudoKu::init
+    // test SudoKu::init
     SudoKu test;
     vector<vector<int>> matrix(9, vector<int>(9, 0));
     vector<vector<int>> matrix_result = {
@@ -132,7 +137,7 @@ TEST(init, null) {   /* NOLINT */
 
 
 TEST(is_valid,null){     /* NOLINT */
-    // ≤‚ ‘SudoKu::is_valid
+    // test SudoKu::is_valid
     vector<vector<int>> matrix = {
         {1, 2, 3, 4, 5, 6, 7, 0, 9},
         {4, 5, 6, 7, 8, 9, 0, 2, 3},
@@ -156,7 +161,7 @@ TEST(is_valid,null){     /* NOLINT */
 
 
 TEST(set_blank,null){    /* NOLINT */
-    // ≤‚ ‘Sudoku::set_blank
+    // test Sudoku::set_blank
     vector<vector<int>> matrix = {
         {1, 2, 3, 4, 5, 6, 7, 8, 9},
         {4, 5, 6, 7, 8, 9, 1, 2, 3},
@@ -182,8 +187,8 @@ TEST(set_blank,null){    /* NOLINT */
 
 
 TEST(create_random_sudoku,unique_range){   /* NOLINT */
-    // ≤‚ ‘SudoKu::create_random_sudoku
-    // ≤‚ ‘ƒ—∂»£¨Œ®“ªΩ‚
+    // test SudoKu::create_random_sudoku
+    // test difficulty, unique solution
     SudoKu test;
     redundant_m = true;
     game_level = 2;
@@ -198,8 +203,7 @@ TEST(create_random_sudoku,unique_range){   /* NOLINT */
     string line;
     int row = 0;
 
-    while (getline(in, line))
-    {
+    while (getline(in, line)) {
         if (line.empty()) {
             break;
         }
@@ -228,7 +232,7 @@ TEST(create_random_sudoku,unique_range){   /* NOLINT */
     EXPECT_EQ(test.solve_with_count(matrix, temp), 1);
 
 
-    // ≤‚ ‘∑∂Œß£¨Œ®“ªΩ‚
+    // test range, unique solution
     redundant_m = false;
     redundant_r = true;
     for (int i = 0; i < 9; i++) {
@@ -265,7 +269,7 @@ TEST(create_random_sudoku,unique_range){   /* NOLINT */
             }
         }
     }
-    EXPECT_EQ((count>=25 && count <=50), true);
+    EXPECT_EQ((count >= 25 && count <= 50), true);
     temp = 0;
     EXPECT_EQ(test.solve_with_count(matrix, temp), 1);
 }
@@ -511,9 +515,9 @@ TEST(SudoKu ,null){  /* NOLINT */
 
 
 TEST(create_sudoku_endgame ,null){   /* NOLINT */
-    //¥¥Ω®÷’æ÷
+    // create endgame
     vector<vector<int>> matrix(9, vector<int>(9, 0));
-    // ≥ı ºªØæÿ’Û
+    // initialization matrix
     SudoKu endgame(matrix);
 
     endgame.create_sudoku_endgame(3, matrix);
@@ -529,7 +533,7 @@ TEST(create_sudoku_endgame ,null){   /* NOLINT */
             break;
         }
 
-        if (row==9) {
+        if (row == 9) {
             row = 0;
             count++;
         }
@@ -547,13 +551,13 @@ TEST(create_sudoku_endgame ,null){   /* NOLINT */
 
 
 TEST(read_file ,null){   /* NOLINT */
-    // ∂¡Œƒº˛
+    // read file
     vector<vector<int>> matrix(9, vector<int>(9, 0));
     SudoKu solve_game;
 
     ifstream in;
     in.open("games.txt", ios::in);
-    cout << sudoku_solve_path << endl;
+    std::cout << sudoku_solve_path << std::endl;
     solve_game.read_file(in, matrix);
 }
 
