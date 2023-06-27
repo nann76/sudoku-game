@@ -65,7 +65,6 @@ TEST(swap_col, null) {  /* NOLINT */
 
 
 TEST(solve_with_count, null) {  /* NOLINT */
-
     // test SudoKu::solve_with_count
     SudoKu test1;
     vector<vector<int>> matrix1 = {
@@ -209,10 +208,10 @@ TEST(create_random_sudoku,unique_range){   /* NOLINT */
         }
         if (row == 9) {
             row = 0;
-        }
-        else {
+        } else {
             for (int j = 0; j < 9; j++) {
-                int num = (char)line[2 * (long long)j] - '0';
+                int num = static_cast<int>(
+                        line[2 * static_cast<int64_t>(j)] - '0');
                 matrix[row][j] = num;
             }
             row++;
@@ -244,17 +243,16 @@ TEST(create_random_sudoku,unique_range){   /* NOLINT */
     in.open("games.txt", ios::in);
     row = 0;
 
-    while (getline(in, line))
-    {
+    while (getline(in, line)) {
         if (line.empty()) {
             break;
         }
         if (row == 9) {
             row = 0;
-        }
-        else {
+        } else {
             for (int j = 0; j < 9; j++) {
-                int num = (char)line[2 * (long long)j] - '0';
+                int num = static_cast<int>(
+                        line[2 * static_cast<int64_t>(j)] - '0');
                 matrix[row][j] = num;
             }
             row++;
@@ -289,17 +287,16 @@ TEST(create_random_sudoku,not_unique0){   /* NOLINT */
     string line;
     int row = 0;
 
-    while (getline(in, line))
-    {
+    while (getline(in, line)) {
         if (line.empty()) {
             break;
         }
         if (row == 9) {
             row = 0;
-        }
-        else {
+        } else {
             for (int j = 0; j < 9; j++) {
-                int num = (char)line[2 * (long long)j] - '0';
+                int num = static_cast<int>(
+                        line[2 * static_cast<int64_t>(j)] - '0');
                 matrix[row][j] = num;
             }
             row++;
@@ -332,17 +329,16 @@ TEST(create_random_sudoku,not_unique1){   /* NOLINT */
     string line;
     int row = 0;
 
-    while (getline(in, line))
-    {
+    while (getline(in, line)) {
         if (line.empty()) {
             break;
         }
         if (row == 9) {
             row = 0;
-        }
-        else {
+        } else {
             for (int j = 0; j < 9; j++) {
-                int num = (char)line[2 * (long long)j] - '0';
+                int num = static_cast<int>(
+                        line[2 * static_cast<int64_t>(j)] - '0');
                 matrix[row][j] = num;
             }
             row++;
@@ -375,17 +371,16 @@ TEST(create_random_sudoku,not_unique2){   /* NOLINT */
     string line;
     int row = 0;
 
-    while (getline(in, line))
-    {
+    while (getline(in, line)) {
         if (line.empty()) {
             break;
         }
         if (row == 9) {
             row = 0;
-        }
-        else {
+        } else {
             for (int j = 0; j < 9; j++) {
-                int num = (char)line[2 * (long long)j] - '0';
+                int num = static_cast<int>(
+                        line[2 * static_cast<int64_t>(j)] - '0');
                 matrix[row][j] = num;
             }
             row++;
@@ -418,17 +413,16 @@ TEST(create_random_sudoku,not_unique3){   /* NOLINT */
     string line;
     int row = 0;
 
-    while (getline(in, line))
-    {
+    while (getline(in, line)) {
         if (line.empty()) {
             break;
         }
         if (row == 9) {
             row = 0;
-        }
-        else {
+        } else {
             for (int j = 0; j < 9; j++) {
-                int num = (char)line[2 * (long long)j] - '0';
+                int num = static_cast<int>(
+                        line[2 * static_cast<int64_t>(j)] - '0');
                 matrix[row][j] = num;
             }
             row++;
@@ -461,17 +455,16 @@ TEST(create_random_sudoku,not_unique_default){   /* NOLINT */
     string line;
     int row = 0;
 
-    while (getline(in, line))
-    {
+    while (getline(in, line)) {
         if (line.empty()) {
             break;
         }
         if (row == 9) {
             row = 0;
-        }
-        else {
+        } else {
             for (int j = 0; j < 9; j++) {
-                int num = (char)line[2 * (long long)j] - '0';
+                int num = static_cast<int>(
+                        line[2 * static_cast<int64_t>(j)] - '0');
                 matrix[row][j] = num;
             }
             row++;
@@ -491,7 +484,7 @@ TEST(create_random_sudoku,not_unique_default){   /* NOLINT */
 
 
 TEST(SudoKu ,null){  /* NOLINT */
-    //¹¹Ôìº¯Êý
+    // Constructor
     vector<vector<int>> matrix(9, vector<int>(9, 0));
     SudoKu test(matrix);
     vector<vector<int>> matrix_result = {
@@ -527,8 +520,7 @@ TEST(create_sudoku_endgame ,null){   /* NOLINT */
     string line;
     int row = 0;
     int count = 0;
-    while (getline(in, line))
-    {
+    while (getline(in, line)) {
         if (line.empty()) {
             break;
         }
@@ -536,10 +528,10 @@ TEST(create_sudoku_endgame ,null){   /* NOLINT */
         if (row == 9) {
             row = 0;
             count++;
-        }
-        else {
+        } else {
             for (int j = 0; j < 9; j++) {
-                int num = (char)line[2 * (long long)j] - '0';
+                int num = static_cast<int>(
+                        line[2 * static_cast<int64_t>(j)] - '0');
                 matrix[row][j] = num;
             }
             row++;

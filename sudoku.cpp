@@ -23,8 +23,9 @@ bool SudoKu::is_valid(int row, int col, int num, vector<vector<int>>& matrix) {
 
 
 bool SudoKu::init(vector<vector<int>>& matrix, int start){ /* NOLINT */
-    if (start == 81)  return true;
-    else {
+    if (start == 81) {
+        return true;
+    } else {
         int row = start / 9;
         int col = start % 9;
         bool current_is_valid = false;
@@ -36,8 +37,7 @@ bool SudoKu::init(vector<vector<int>>& matrix, int start){ /* NOLINT */
                     if (!current_is_valid) matrix[row][col] = 0;
                 }
             }
-        }
-        else {
+        } else {
             current_is_valid = init(matrix, start + 1);
         }
         return current_is_valid;
@@ -45,7 +45,7 @@ bool SudoKu::init(vector<vector<int>>& matrix, int start){ /* NOLINT */
 }
 
 
-bool get_RC(int& row, int& col, vector<vector<int>>& matrix) {
+bool get_RC(int& row, int& col, vector<vector<int>>& matrix) {  /* NOLINT */
     for (row = 0; row < 9; row++)
         for (col = 0; col < 9; col++)
             if (matrix[row][col] == 0)
@@ -70,8 +70,7 @@ int SudoKu::solve_with_count(vector<vector<int>>& matrix,int  &ans) {   /* NOLIN
                 matrix[i][j] = 0;
             }
         }
-    }
-    else {
+    } else {
         ans++;
         if (ans == 2) not_unique = true;
     }
@@ -202,9 +201,7 @@ void SudoKu::create_random_sudoku(int num_game, bool if_unique) {
                     write_file(wfile, temp2);
                 }
             }
-        }
-
-        else {
+        } else {
             // deep copy initial
             vector<vector<int>> temp(matrix);
             // get some blank
@@ -218,7 +215,8 @@ void SudoKu::create_random_sudoku(int num_game, bool if_unique) {
 
 
 // create endgame
-void SudoKu::create_sudoku_endgame(int num_game, vector<vector<int>>& matrix) const {
+void SudoKu::create_sudoku_endgame(int num_game,
+                                   vector<vector<int>>& matrix) const {
     int choice[9][2] = {
               {0, 1}, {0, 2}, {1, 2},
               {3, 4}, {3, 5}, {4, 5},
@@ -277,15 +275,14 @@ void SudoKu::read_file(ifstream& file, vector<vector<int>>& matrix) {
                 for (int j = 0; j < 9; j++) {
                     std::cout << matrix[i][j] << " ";
                     matrix[i][j] = 0;
-
                 }
                 std::cout << std::endl;
             }
             std::cout << "-----------------" << std::endl;
         } else {
             for (int j = 0; j < 9; j++) {
-                int num = static_cast<unsigned char>(
-                        line[2 * (long long)j] - '0');
+                int num = static_cast<int>(
+                        line[2 * static_cast<int64_t>(j)] - '0');
                 matrix[row][j] = num;
             }
             row++;
