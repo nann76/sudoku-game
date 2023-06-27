@@ -20,7 +20,7 @@ bool SudoKu::is_valid(int row, int col, int num, vector<vector<int>>& matrix){
 }
 
 
-bool SudoKu::init(vector<vector<int>>& matrix, int start){
+bool SudoKu::init(vector<vector<int>>& matrix, int start){ /* NOLINT */
     if (start == 81)  return true;
     else {
         int row = start / 9;
@@ -55,7 +55,7 @@ bool get_RC(int& row, int& col, vector<vector<int>>& matrix)
 
 // 本函数可以获得全部的解的数量，但当有2个时则返回
 bool not_unique = false;
-int SudoKu::solve_with_count(vector<vector<int>>& matrix,int  &ans) {
+int SudoKu::solve_with_count(vector<vector<int>>& matrix,int  &ans) {   /* NOLINT */
     int i, j;
     if (get_RC(i, j, matrix)){
         for (int num = 1; num <= 9; num++){
