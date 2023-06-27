@@ -17,7 +17,6 @@ using namespace std;
 class SudoKu
 {
 public:
-    int num_solutions=0;
     int solve_with_count(vector<vector<int>>& matrix, int& ans);
     bool init(vector<vector<int>>& matrix, int start);
     static bool is_valid(int row, int col, int num, vector<vector<int>>& matrix);
