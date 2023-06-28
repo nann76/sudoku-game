@@ -281,9 +281,13 @@ void SudoKu::read_file(ifstream& file, vector<vector<int>>& matrix) {
             std::cout << "-----------------" << std::endl;
         } else {
             for (int j = 0; j < 9; j++) {
-                int num = static_cast<int>(
-                        line[2 * static_cast<int64_t>(j)] - '0');
-                matrix[row][j] = num;
+                if(line[2 * static_cast<int64_t>(j)] == '$') {
+                    matrix[row][j] = 0;
+                } else {
+                    int num = static_cast<int>(
+                            line[2 * static_cast<int64_t>(j)] - '0');
+                    matrix[row][j] = num;
+                }
             }
             row++;
         }
@@ -297,7 +301,11 @@ void SudoKu::read_file(ifstream& file, vector<vector<int>>& matrix) {
 void SudoKu::write_file(ofstream& file, vector<vector<int>> matrix) {
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 9; j++) {
-            file << matrix[i][j] << " ";
+            if(matrix[i][j] == 0) {
+                file << '$' << " ";
+            } else {
+                file << matrix[i][j] << " ";
+            }
         }
         file << std::endl;
     }
