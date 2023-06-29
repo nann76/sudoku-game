@@ -3,7 +3,7 @@
 // NOLINTNEXTLINE(runtime/references)
 # include "gtest/gtest.h"
 # include "sudoku.h"
-//#define ADD_COMMON
+#define ADD_COMMON
 
 #ifdef ADD_COMMON
 # include "common.h"
@@ -27,7 +27,6 @@ extern int low_range;
 extern int high_range;
 
 extern bool redundant_u;
-extern bool if_unique;
 #endif
 
 using std::ios;
