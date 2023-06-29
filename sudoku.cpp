@@ -148,8 +148,7 @@ void SudoKu::create_random_sudoku(int num_game, bool if_unique) {
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> index_dis1(0, 8);
     std::uniform_int_distribution<> index_dis2(0, 8);
-    std::uniform_int_distribution<> num_blank_dis(0,
-                                    (high_range-low_range+1)+low_range-1);
+    std::uniform_int_distribution<> num_blank_dis(low_range, high_range);
 
     string file_name = game_dir;
     ofstream wfile;

@@ -28,6 +28,5 @@ int high_range = 0;
 
 // The solution of the generated game is unique -u
 bool redundant_u = false;
-bool if_unique = false;
 
 #endif  // SUDOKU_GAME_COMMON_H_

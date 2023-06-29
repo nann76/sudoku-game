@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
                 my_assert(num_sudoku_endgame != 0, "optarg  -c not a num ");
                 my_assert(1 <= num_sudoku_endgame &&
                                     num_sudoku_endgame <= 1000000,
-                          "终局的数量不在范围内");
+                          "The number of endgame is not in range");
                 break;
             case 's':
                 my_assert(!redundant_s, "redundant optarg  -s");
@@ -48,7 +48,7 @@ int main(int argc, char* argv[]) {
                 num_sudoku_game = static_cast<int>(strtol(optarg, &endptr, 10));
                 my_assert(num_sudoku_game != 0, "optarg  -n not a num ");
                 my_assert(1 <= num_sudoku_game && num_sudoku_game <= 1000,
-                          "需要的游戏数量不在范围内");
+                          "The required number of games is out of range!");
                 break;
             case 'm':
                 my_assert(!redundant_m, "redundant optarg  -m");
@@ -59,7 +59,7 @@ int main(int argc, char* argv[]) {
                 my_assert(game_level != 0,
                           "optarg  -m not a num ");
                 my_assert(1 <= game_level && game_level <= 3,
-                          "游戏难度不在范围内");
+                          "Game difficulty is out of range!");
                 break;
             case 'r':
                 my_assert(!redundant_r, "redundant optarg  -r");
@@ -73,18 +73,21 @@ int main(int argc, char* argv[]) {
                 char *my_saveptr1;
                 low = strtok_r(temp, "~", &my_saveptr1);
                 low_range = static_cast<int>(strtol(low, &endptr, 10));
-                char *my_saveptr2;
-                up = strtok_r(nullptr, "~", &my_saveptr2);
+                up = strtok_r(nullptr, "~", &my_saveptr1);
                 high_range = static_cast<int>(strtol(up, &endptr, 10));
                 my_assert(low_range != 0, "optarg  -u  low range not a num ");
                 my_assert(high_range != 0, "optarg  -u  high range not a num ");
 
                 my_assert(20 <= low_range && low_range <= 55,
-                          "挖空的范围low_range 不在过规定范围内");
+                          "The blank range low_range is "
+                          "not within the specified range!");
                 my_assert(20 <= high_range && high_range <= 55,
-                          "挖空的范围high_range 不在过规定范围内");
+                          "The blank range high_range is"
+                          " not within the specified range!");
                 if (high_range < low_range) {
-                    my_assert(false, "挖空的范围low range 小于high_range ");
+                    my_assert(false,
+                              "The blank range low range "
+                              "should be smaller than high_range ");
                 }
                 break;
             case 'u':
@@ -101,24 +104,24 @@ int main(int argc, char* argv[]) {
     // 判断参数同时出现
     if (redundant_m) {
         if (!redundant_n) {
-            my_assert(false, "m与n未同时出现");
+            my_assert(false, "m and n do not appear at the same time");
         }
     }
 
     if (redundant_r) {
         if (!redundant_n) {
-            my_assert(false, "r与n未同时出现");
+            my_assert(false, "r and n do not appear at the same time");
         }
     }
 
     if (redundant_u) {
         if (!redundant_n) {
-            my_assert(false, "u与n未同时出现");
+            my_assert(false, "u and n do not appear at the same time");
         }
     }
 
     if (redundant_m && redundant_r) {
-        my_assert(false, "m和r不能同时出现");
+        my_assert(false, "m and r can not appear at the same time");
     }
 
     if (redundant_s) {

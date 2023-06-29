@@ -3,7 +3,7 @@
 // NOLINTNEXTLINE(runtime/references)
 # include "gtest/gtest.h"
 # include "sudoku.h"
-#define ADD_COMMON
+// #define ADD_COMMON
 
 #ifdef ADD_COMMON
 # include "common.h"
