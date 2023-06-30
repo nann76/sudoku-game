@@ -5,7 +5,7 @@
 #include "getopt.h"         // NOLINT
 #include "gtest/gtest.h"
 
-// #define TEST_SUDOKU
+#define TEST_SUDOKU
 
 #ifndef TEST_SUDOKU
 #include<iostream>

@@ -3,7 +3,7 @@
 // NOLINTNEXTLINE(runtime/references)
 # include "gtest/gtest.h"
 # include "sudoku.h"
-// #define ADD_COMMON
+#define ADD_COMMON
 
 #ifdef ADD_COMMON
 # include "common.h"
@@ -209,15 +209,20 @@ TEST(create_random_sudoku,unique_range){   /* NOLINT */
             row = 0;
         } else {
             for (int j = 0; j < 9; j++) {
-                int num = static_cast<int>(
-                        line[2 * static_cast<int64_t>(j)] - '0');
-                matrix[row][j] = num;
+                if (line[2 * static_cast<int64_t>(j)] == '$') {
+                    matrix[row][j] = 0;
+                } else {
+                    int num = static_cast<int>(
+                            line[2 * static_cast<int64_t>(j)] - '0');
+                    matrix[row][j] = num;
+                }
             }
             row++;
         }
     }
     in.close();
     int count = 0;
+
     for (auto & i : matrix) {
         for (int j : i) {
             if (j == 0) {
@@ -250,9 +255,13 @@ TEST(create_random_sudoku,unique_range){   /* NOLINT */
             row = 0;
         } else {
             for (int j = 0; j < 9; j++) {
-                int num = static_cast<int>(
-                        line[2 * static_cast<int64_t>(j)] - '0');
-                matrix[row][j] = num;
+                if (line[2 * static_cast<int64_t>(j)] == '$') {
+                    matrix[row][j] = 0;
+                } else {
+                    int num = static_cast<int>(
+                            line[2 * static_cast<int64_t>(j)] - '0');
+                    matrix[row][j] = num;
+                }
             }
             row++;
         }
@@ -294,9 +303,13 @@ TEST(create_random_sudoku,not_unique0){   /* NOLINT */
             row = 0;
         } else {
             for (int j = 0; j < 9; j++) {
-                int num = static_cast<int>(
-                        line[2 * static_cast<int64_t>(j)] - '0');
-                matrix[row][j] = num;
+                if (line[2 * static_cast<int64_t>(j)] == '$') {
+                    matrix[row][j] = 0;
+                } else {
+                    int num = static_cast<int>(
+                            line[2 * static_cast<int64_t>(j)] - '0');
+                    matrix[row][j] = num;
+                }
             }
             row++;
         }
@@ -336,9 +349,13 @@ TEST(create_random_sudoku,not_unique1){   /* NOLINT */
             row = 0;
         } else {
             for (int j = 0; j < 9; j++) {
-                int num = static_cast<int>(
-                        line[2 * static_cast<int64_t>(j)] - '0');
-                matrix[row][j] = num;
+                if (line[2 * static_cast<int64_t>(j)] == '$') {
+                    matrix[row][j] = 0;
+                } else {
+                    int num = static_cast<int>(
+                            line[2 * static_cast<int64_t>(j)] - '0');
+                    matrix[row][j] = num;
+                }
             }
             row++;
         }
@@ -378,9 +395,13 @@ TEST(create_random_sudoku,not_unique2){   /* NOLINT */
             row = 0;
         } else {
             for (int j = 0; j < 9; j++) {
-                int num = static_cast<int>(
-                        line[2 * static_cast<int64_t>(j)] - '0');
-                matrix[row][j] = num;
+                if (line[2 * static_cast<int64_t>(j)] == '$') {
+                    matrix[row][j] = 0;
+                } else {
+                    int num = static_cast<int>(
+                            line[2 * static_cast<int64_t>(j)] - '0');
+                    matrix[row][j] = num;
+                }
             }
             row++;
         }
@@ -420,9 +441,13 @@ TEST(create_random_sudoku,not_unique3){   /* NOLINT */
             row = 0;
         } else {
             for (int j = 0; j < 9; j++) {
-                int num = static_cast<int>(
-                        line[2 * static_cast<int64_t>(j)] - '0');
-                matrix[row][j] = num;
+                if (line[2 * static_cast<int64_t>(j)] == '$') {
+                    matrix[row][j] = 0;
+                } else {
+                    int num = static_cast<int>(
+                            line[2 * static_cast<int64_t>(j)] - '0');
+                    matrix[row][j] = num;
+                }
             }
             row++;
         }
@@ -462,9 +487,13 @@ TEST(create_random_sudoku,not_unique_default){   /* NOLINT */
             row = 0;
         } else {
             for (int j = 0; j < 9; j++) {
-                int num = static_cast<int>(
-                        line[2 * static_cast<int64_t>(j)] - '0');
-                matrix[row][j] = num;
+                if (line[2 * static_cast<int64_t>(j)] == '$') {
+                    matrix[row][j] = 0;
+                } else {
+                    int num = static_cast<int>(
+                            line[2 * static_cast<int64_t>(j)] - '0');
+                    matrix[row][j] = num;
+                }
             }
             row++;
         }
